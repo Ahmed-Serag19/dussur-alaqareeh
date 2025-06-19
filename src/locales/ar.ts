@@ -9,10 +9,11 @@ const ar = {
 
   // Sidebar
   sidebar: {
-    addProperty: "إضافة عقار جديد",
+    addProperty: "إضافة عقار ",
     viewProperties: "عرض العقارات",
     profile: "الملف الشخصي",
     logout: "تسجيل خروج",
+    home: "الرئيسية",
   },
 
   // Auth
@@ -69,9 +70,19 @@ const ar = {
   // Dashboard
   dashboard: {
     title: "لوحة التحكم",
-    welcome: "مرحباً بك في نظام إدارة دسر العقارية",
+    welcome: "دسر العقارية",
     addNewProperty: "تسجيل عقار جديد",
     viewProperties: "عرض العقارات",
+    stats: {
+      total: "إجمالي العقارات",
+      available: "العقارات المتاحة",
+    },
+    actions: {
+      add: "تسجيل عقار جديد",
+      addDesc: "إضافة عقار جديد إلى النظام",
+      view: "عرض العقارات",
+      viewDesc: "عرض وإدارة جميع العقارات",
+    },
   },
 
   // Common
@@ -90,6 +101,79 @@ const ar = {
     export: "تصدير",
     import: "استيراد",
     refresh: "تحديث",
+    or: "أو",
+  },
+  // Properties
+  properties: {
+    addProperty: "إضافة عقار جديد",
+    propertyDetails: "تفاصيل العقار",
+    basicInfo: "المعلومات الأساسية",
+    locationInfo: "معلومات الموقع",
+    propertySpecs: "مواصفات العقار",
+    propertyFeatures: "مميزات العقار",
+    details: "تفاصيل العقار",
+    locationInfoAndSpecs: "المنطقة مدينة حي الخ..",
+
+    // Form fields
+    title: "عنوان العقار",
+    titlePlaceholder: "أدخل عنوان العقار",
+    descriptionAr: "الوصف بالعربية",
+    descriptionEn: "الوصف بالإنجليزية",
+    price: "السعر (ريال)",
+    pricePlaceholder: "أدخل السعر",
+    area: "المساحة (متر مربع)",
+    areaPlaceholder: "أدخل المساحة",
+
+    // Location
+    region: "المنطقة",
+    city: "المدينة",
+    neighborhood: "الحي",
+    streetAr: "الشارع (عربي)",
+    streetEn: "الشارع (إنجليزي)",
+    selectRegion: "اختر المنطقة",
+    selectCity: "اختر المدينة",
+    selectNeighborhood: "اختر الحي",
+
+    // Property details
+    propertyType: "نوع العقار",
+    listingType: "نوع الإعلان",
+    condition: "حالة العقار",
+    finishType: "نوع التشطيب",
+    roomsCount: "عدد الغرف",
+    bathroomsCount: "عدد دورات المياه",
+    livingroomsCount: "عدد غرف المعيشة",
+    floorsCount: "عدد الأدوار",
+    buildingAge: "عمر البناء (سنوات)",
+
+    // Map
+    selectLocation: "اختيار الموقع",
+    mapInstructions: "انقر على الخريطة لتحديد الموقع",
+
+    // Buttons
+    saveProperty: "حفظ العقار",
+    saveDraft: "حفظ كمسودة",
+    cancel: "إلغاء",
+
+    // Validation
+    validation: {
+      titleRequired: "عنوان العقار مطلوب",
+      descriptionRequired: "الوصف مطلوب",
+      priceRequired: "السعر مطلوب",
+      areaRequired: "المساحة مطلوبة",
+      regionRequired: "المنطقة مطلوبة",
+      cityRequired: "المدينة مطلوبة",
+      neighborhoodRequired: "الحي مطلوب",
+      propertyTypeRequired: "نوع العقار مطلوب",
+      listingTypeRequired: "نوع الإعلان مطلوب",
+      conditionRequired: "حالة العقار مطلوبة",
+      finishTypeRequired: "نوع التشطيب مطلوب",
+      streetRequired: "الشارع مطلوب",
+      locationRequired: "الموقع مطلوب",
+    },
+
+    // Success/Error messages
+    createSuccess: "تم إنشاء العقار بنجاح",
+    createError: "حدث خطأ في إنشاء العقار",
   },
 };
 

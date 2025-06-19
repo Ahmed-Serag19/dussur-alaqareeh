@@ -9,10 +9,11 @@ const en = {
 
   // Sidebar
   sidebar: {
-    addProperty: "Add New Property",
+    addProperty: "Add Property",
     viewProperties: "View Properties",
     profile: "Profile",
     logout: "Logout",
+    home: "Homepage",
   },
 
   // Auth
@@ -69,9 +70,19 @@ const en = {
   // Dashboard
   dashboard: {
     title: "Dashboard",
-    welcome: "Welcome to Dusser Real Estate Management System",
+    welcome: "Dusser Real Estate Management System",
     addNewProperty: "Add New Property",
     viewProperties: "View Properties",
+    stats: {
+      total: "Total Properties",
+      available: "Available Properties",
+    },
+    actions: {
+      add: "Register New Property",
+      addDesc: "Add a new property to the system",
+      view: "View Properties",
+      viewDesc: "Browse and manage all properties",
+    },
   },
 
   // Common
@@ -90,6 +101,79 @@ const en = {
     export: "Export",
     import: "Import",
     refresh: "Refresh",
+    or: "Or",
+  },
+
+  properties: {
+    addProperty: "Add New Property",
+    propertyDetails: "Property Details",
+    basicInfo: "Basic Information",
+    locationInfo: "Location Information",
+    propertySpecs: "Property Specifications",
+    propertyFeatures: "Property Features",
+    details: "Property Details",
+    locationInfoAndSpecs: "City Regin etc..",
+
+    // Form fields
+    title: "Property Title",
+    titlePlaceholder: "Enter property title",
+    descriptionAr: "Description (Arabic)",
+    descriptionEn: "Description (English)",
+    price: "Price (SAR)",
+    pricePlaceholder: "Enter price",
+    area: "Area (sqm)",
+    areaPlaceholder: "Enter area",
+
+    // Location
+    region: "Region",
+    city: "City",
+    neighborhood: "Neighborhood",
+    streetAr: "Street (Arabic)",
+    streetEn: "Street (English)",
+    selectRegion: "Select Region",
+    selectCity: "Select City",
+    selectNeighborhood: "Select Neighborhood",
+
+    // Property details
+    propertyType: "Property Type",
+    listingType: "Listing Type",
+    condition: "Property Condition",
+    finishType: "Finish Type",
+    roomsCount: "Number of Rooms",
+    bathroomsCount: "Number of Bathrooms",
+    livingroomsCount: "Number of Living Rooms",
+    floorsCount: "Number of Floors",
+    buildingAge: "Building Age (years)",
+
+    // Map
+    selectLocation: "Select Location",
+    mapInstructions: "Click on the map to select location",
+
+    // Buttons
+    saveProperty: "Save Property",
+    saveDraft: "Save as Draft",
+    cancel: "Cancel",
+
+    // Validation
+    validation: {
+      titleRequired: "Property title is required",
+      descriptionRequired: "Description is required",
+      priceRequired: "Price is required",
+      areaRequired: "Area is required",
+      regionRequired: "Region is required",
+      cityRequired: "City is required",
+      neighborhoodRequired: "Neighborhood is required",
+      propertyTypeRequired: "Property type is required",
+      listingTypeRequired: "Listing type is required",
+      conditionRequired: "Property condition is required",
+      finishTypeRequired: "Finish type is required",
+      streetRequired: "Street is required",
+      locationRequired: "Location is required",
+    },
+
+    // Success/Error messages
+    createSuccess: "Property created successfully",
+    createError: "Error creating property",
   },
 };
 

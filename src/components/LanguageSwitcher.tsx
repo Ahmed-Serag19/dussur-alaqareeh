@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
 import { Globe, Check, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,35 +6,39 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import useLanguage from "@/hooks/useLanguage";
+import useToggle from "@/hooks/useToggle";
 
-const languages = [
+const LANGUAGES = [
   { code: "ar", name: "العربية", flag: "🇸🇦" },
   { code: "en", name: "English", flag: "🇺🇸" },
-];
+] as const;
 
 const LanguageSwitcher = () => {
-  const { i18n } = useTranslation();
-  const [isOpen, setIsOpen] = useState(false);
+  const { currentLanguage, changeLanguage } = useLanguage();
+  const { value: isOpen, setTrue: open, setFalse: close } = useToggle();
 
-  const currentLanguage =
-    languages.find((lang) => lang.code === i18n.language) || languages[0];
+  const currentLang =
+    LANGUAGES.find((lang) => lang.code === currentLanguage) || LANGUAGES[0];
 
   const handleLanguageChange = (langCode: string) => {
-    i18n.changeLanguage(langCode);
-    document.dir = langCode === "ar" ? "rtl" : "ltr";
-    setIsOpen(false);
+    changeLanguage(langCode);
+    close();
   };
 
   return (
-    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+    <DropdownMenu
+      open={isOpen}
+      onOpenChange={(isOpen) => (isOpen ? open() : close())}
+    >
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
           size="sm"
-          className="gap-2 h-9 px-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all duration-200"
+          className="gap-[2px] sm:gap-1 md:gap-2 h-9 px-3 cursor-pointer hover:text-blue-800  bg-white/10 backdrop-blur-sm border border-white/20 text-black hover:bg-white/20 transition-all duration-300"
         >
           <Globe className="h-4 w-4" />
-          <span className="text-sm font-medium">{currentLanguage.flag}</span>
+          <span className="text-sm font-medium">{currentLang.flag}</span>
           <ChevronDown className="h-3 w-3 opacity-70" />
         </Button>
       </DropdownMenuTrigger>
@@ -44,7 +46,7 @@ const LanguageSwitcher = () => {
         align="end"
         className="w-40 bg-white/95 backdrop-blur-sm border border-gray-200/50"
       >
-        {languages.map((language) => (
+        {LANGUAGES.map((language) => (
           <DropdownMenuItem
             key={language.code}
             onClick={() => handleLanguageChange(language.code)}
@@ -54,7 +56,7 @@ const LanguageSwitcher = () => {
               <span>{language.flag}</span>
               <span className="text-sm">{language.name}</span>
             </div>
-            {i18n.language === language.code && (
+            {currentLanguage === language.code && (
               <Check className="h-4 w-4 text-blue-600" />
             )}
           </DropdownMenuItem>
@@ -63,4 +65,5 @@ const LanguageSwitcher = () => {
     </DropdownMenu>
   );
 };
+
 export default LanguageSwitcher;
