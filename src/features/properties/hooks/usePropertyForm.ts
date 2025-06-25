@@ -22,6 +22,7 @@ export const usePropertyForm = () => {
     resolver: zodResolver(createPropertySchema(t)),
     defaultValues: {
       title: "",
+      description: "",
       descriptionAr: "",
       descriptionEn: "",
       price: 0,

@@ -1,8 +1,11 @@
 import { z } from "zod";
 
-export const createPropertySchema = (t: (key: string) => string) =>
+export const createPropertySchema = (t: any) =>
   z.object({
     title: z.string().min(1, t("properties.validation.titleRequired")),
+    description: z
+      .string()
+      .min(1, t("properties.validation.descriptionRequired")),
     descriptionAr: z
       .string()
       .min(1, t("properties.validation.descriptionRequired")),

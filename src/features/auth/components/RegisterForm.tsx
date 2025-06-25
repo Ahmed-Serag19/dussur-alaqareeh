@@ -18,8 +18,7 @@ interface RegisterFormProps {
 
 const RegisterForm = ({ onSubmit, isLoading }: RegisterFormProps) => {
   const { value: showPassword, toggle: togglePassword } = useToggle();
-  const { value: showConfirmPassword, toggle: toggleConfirmPassword } =
-    useToggle();
+
   const { isRTL, t } = useLanguage();
 
   const {
@@ -125,7 +124,7 @@ const RegisterForm = ({ onSubmit, isLoading }: RegisterFormProps) => {
         />
       </FormField>
 
-      <FormField
+      {/* <FormField
         label={t("auth.register.confirmPassword")}
         htmlFor="confirmPassword"
         error={
@@ -156,7 +155,7 @@ const RegisterForm = ({ onSubmit, isLoading }: RegisterFormProps) => {
           focusColor="orange"
           {...register("confirmPassword")}
         />
-      </FormField>
+      </FormField> */}
 
       <GradientButton
         type="submit"

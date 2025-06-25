@@ -65,6 +65,9 @@ const ar = {
       confirmPasswordRequired: "تأكيد كلمة المرور مطلوب",
       passwordsNotMatch: "كلمات المرور غير متطابقة",
     },
+    logout: {
+      success: "تم تسجيل الخروج بنجاح",
+    },
   },
 
   // Dashboard
@@ -115,8 +118,8 @@ const ar = {
     locationInfoAndSpecs: "المنطقة مدينة حي الخ..",
 
     // Form fields
-    title: "عنوان العقار",
-    titlePlaceholder: "أدخل عنوان العقار",
+    title: "اسم العقار",
+    titlePlaceholder: "أدخل اسم للعقار",
     descriptionAr: "الوصف بالعربية",
     descriptionEn: "الوصف بالإنجليزية",
     price: "السعر (ريال)",

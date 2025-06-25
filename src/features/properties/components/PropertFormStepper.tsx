@@ -1,5 +1,3 @@
-"use client";
-
 import type React from "react";
 
 import { useState } from "react";
@@ -64,7 +62,7 @@ const PropertyFormStepper = ({
       </div>
 
       {/* Form Content */}
-      <div className="flex-1 overflow-y-auto bg-gray-50">
+      <div className="flex-1 overflow-y-hidden bg-gray-50">
         <div className="max-w-4xl mx-auto p-6">
           {steps[currentStep].component}
         </div>

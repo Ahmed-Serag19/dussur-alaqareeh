@@ -19,7 +19,20 @@ export const usePropertySubmission = () => {
     },
     onError: (error: any) => {
       console.error("Property creation error:", error);
-      toast.error(error.response?.data?.message || t("properties.createError"));
+      console.error("Error response:", error.response?.data);
+      console.error("Error status:", error.response?.status);
+
+      let errorMessage = t("properties.createError");
+
+      if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      } else if (error.response?.data?.error) {
+        errorMessage = error.response.data.error;
+      } else if (error.response?.status === 403) {
+        errorMessage = "Access denied. Please check your authentication token.";
+      }
+
+      toast.error(errorMessage);
     },
   });
 
@@ -36,12 +49,30 @@ export const usePropertySubmission = () => {
     }
 
     const propertyData = {
-      ...data,
+      title: data.title,
+      description: data.description,
+      descriptionAr: data.descriptionAr,
+      descriptionEn: data.descriptionEn,
+      price: data.price,
+      cityId: data.cityId,
+      regionId: data.regionId,
+      neighborhoodId: data.neighborhoodId,
+      propertyTypeId: data.propertyTypeId,
+      listingTypeId: data.listingTypeId,
+      conditionId: data.conditionId,
+      finishTypeId: data.finishTypeId,
+      streetAr: data.streetAr,
+      streetEn: data.streetEn,
       longitude: selectedLocation.lng,
       latitude: selectedLocation.lat,
-      typeId: data.propertyTypeId,
-      createdBy: 1001,
+      area: data.area,
+      roomsCount: data.roomsCount,
+      bathroomsCount: data.bathroomsCount,
+      livingroomsCount: data.livingroomsCount,
+      floorsCount: data.floorsCount,
+      buildingAge: data.buildingAge,
       statusId: 1,
+      createdBy: 1001,
     };
 
     console.log("Final property data being sent:", propertyData);

@@ -1,13 +1,10 @@
-"use client";
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import PropertyFormHeader from "@/features/properties/components/PropertyFormHeader";
-import BasicInfoSection from "@/features/properties/components/BasicInfoSection";
+import { BasicInfoSection } from "@/features/properties/components/BasicInfoSection";
 import LocationSection from "@/features/properties/components/LocationSection";
-import PropertySpecsSection from "@/features/properties/components/PropertySpecsSection";
-import PropertyDescriptionSection from "@/features/properties/components/PropertyDescriptionSection";
+import { PropertySpecsSection } from "@/features/properties/components/PropertySpecsSection";
 import { usePropertyForm } from "@/features/properties/hooks/usePropertyForm";
 import { useLookupData } from "@/features/properties/hooks/useLookupData";
 import { usePropertySubmission } from "@/features/properties/hooks/usePropertySubmission";
@@ -50,7 +47,9 @@ const AddPropertyPage = () => {
     // Validate all required fields
     const requiredFields = [
       "title",
+      "description",
       "price",
+      "area",
       "propertyTypeId",
       "listingTypeId",
       "regionId",
@@ -58,7 +57,6 @@ const AddPropertyPage = () => {
       "neighborhoodId",
       "streetAr",
       "streetEn",
-      "area",
       "conditionId",
       "finishTypeId",
       "descriptionAr",
@@ -88,14 +86,29 @@ const AddPropertyPage = () => {
     let fieldsToValidate: (keyof CreatePropertyFormData)[] = [];
 
     if (currentStep === 1) {
-      fieldsToValidate = ["title", "price", "propertyTypeId", "listingTypeId"];
+      fieldsToValidate = [
+        "title",
+        "description",
+        "price",
+        "area",
+        "propertyTypeId",
+        "listingTypeId",
+      ];
+    } else if (currentStep === 2) {
+      fieldsToValidate = [
+        "regionId",
+        "cityId",
+        "neighborhoodId",
+        "streetAr",
+        "streetEn",
+      ];
     }
 
     const isValid = await trigger(fieldsToValidate);
     console.log("Step validation result:", isValid);
     console.log("Current errors:", errors);
 
-    if (isValid && currentStep < 2) {
+    if (isValid && currentStep < 3) {
       setCurrentStep(currentStep + 1);
     } else if (!isValid) {
       toast.error("Please fix the errors before proceeding");
@@ -127,12 +140,15 @@ const AddPropertyPage = () => {
   const steps = [
     {
       title: t("properties.basicInfo"),
-      description: t("properties.details"),
+      description: "Enter basic property information",
     },
     {
-      title:
-        t("properties.locationInfo") + " & " + t("properties.propertySpecs"),
-      description: t("properties.locationInfoAndSpecs"),
+      title: t("properties.locationInfo"),
+      description: "Location details and map selection",
+    },
+    {
+      title: t("properties.propertySpecs") + " & " + "التفاصيل",
+      description: "Property specifications and detailed descriptions",
     },
   ];
 
@@ -177,7 +193,7 @@ const AddPropertyPage = () => {
           </div>
         )}
 
-        {/* Step 2: Location & Specifications */}
+        {/* Step 2: Location Information */}
         {currentStep === 2 && (
           <div className="space-y-6">
             <LocationSection
@@ -192,7 +208,12 @@ const AddPropertyPage = () => {
               selectedLocation={selectedLocation}
               setSelectedLocation={setSelectedLocation}
             />
+          </div>
+        )}
 
+        {/* Step 3: Property Specifications & Detailed Descriptions */}
+        {currentStep === 3 && (
+          <div className="space-y-6">
             <PropertySpecsSection
               control={control}
               register={register}
@@ -200,8 +221,6 @@ const AddPropertyPage = () => {
               conditions={lookupData.conditions}
               finishTypes={lookupData.finishTypes}
             />
-
-            <PropertyDescriptionSection register={register} errors={errors} />
           </div>
         )}
 
@@ -244,5 +263,4 @@ const AddPropertyPage = () => {
     </div>
   );
 };
-
 export default AddPropertyPage;

@@ -2,11 +2,15 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import PropertyInput from "@/components/ui/property-input";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
-  PropertySelect,
-  PropertySelectItem,
-} from "@/components/ui/property-select";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Controller, type Control, type FieldErrors } from "react-hook-form";
 import type { CreatePropertyFormData } from "@/features/properties/types/property.types";
 import type { LookupItem } from "@/features/properties/api/lookup.api";
@@ -20,7 +24,7 @@ interface BasicInfoSectionProps {
   listingTypes?: LookupItem[];
 }
 
-const BasicInfoSection = ({
+export const BasicInfoSection = ({
   control,
   register,
   errors,
@@ -38,29 +42,52 @@ const BasicInfoSection = ({
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="grid gap-6 lg:grid-cols-2">
-            <div className="space-y-2">
-              <Label
-                htmlFor="title"
-                className={`block text-sm font-medium ${
-                  isRTL ? "text-right" : "text-left"
-                }`}
-              >
-                {t("properties.title")}
-              </Label>
-              <PropertyInput
-                id="title"
-                placeholder={t("properties.titlePlaceholder")}
-                className={isRTL ? "text-right" : "text-left"}
-                {...register("title")}
-              />
-              {errors.title && (
-                <p className="text-sm text-red-600 text-right">
-                  {errors.title.message}
-                </p>
-              )}
-            </div>
+          <div className="space-y-2">
+            <Label
+              htmlFor="title"
+              className={`block text-sm font-medium ${
+                isRTL ? "text-right" : "text-left"
+              }`}
+            >
+              {t("properties.title")}
+            </Label>
+            <Input
+              id="title"
+              placeholder={t("properties.titlePlaceholder")}
+              className={isRTL ? "text-right" : "text-left"}
+              {...register("title")}
+            />
+            {errors.title && (
+              <p className="text-sm text-red-600 text-right">
+                {errors.title.message}
+              </p>
+            )}
+          </div>
 
+          <div className="space-y-2">
+            <Label
+              htmlFor="description"
+              className={`block text-sm font-medium ${
+                isRTL ? "text-right" : "text-left"
+              }`}
+            >
+              {t("properties.description")}
+            </Label>
+            <Textarea
+              id="description"
+              rows={3}
+              placeholder={t("properties.descriptionPlaceholder")}
+              className={isRTL ? "text-right" : "text-left"}
+              {...register("description")}
+            />
+            {errors.description && (
+              <p className="text-sm text-red-600 text-right">
+                {errors.description.message}
+              </p>
+            )}
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-2">
             <div className="space-y-2">
               <Label
                 htmlFor="price"
@@ -70,7 +97,7 @@ const BasicInfoSection = ({
               >
                 {t("properties.price")}
               </Label>
-              <PropertyInput
+              <Input
                 id="price"
                 type="number"
                 placeholder={t("properties.pricePlaceholder")}
@@ -80,6 +107,29 @@ const BasicInfoSection = ({
               {errors.price && (
                 <p className="text-sm text-red-600 text-right">
                   {errors.price.message}
+                </p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label
+                htmlFor="area"
+                className={`block text-sm font-medium ${
+                  isRTL ? "text-right" : "text-left"
+                }`}
+              >
+                {t("properties.area")}
+              </Label>
+              <Input
+                id="area"
+                type="number"
+                placeholder={t("properties.areaPlaceholder")}
+                className={isRTL ? "text-right" : "text-left"}
+                {...register("area", { valueAsNumber: true })}
+              />
+              {errors.area && (
+                <p className="text-sm text-red-600 text-right">
+                  {errors.area.message}
                 </p>
               )}
             </div>
@@ -98,20 +148,23 @@ const BasicInfoSection = ({
                 name="propertyTypeId"
                 control={control}
                 render={({ field }) => (
-                  <PropertySelect
+                  <Select
                     onValueChange={(value) => field.onChange(Number(value))}
                     value={field.value?.toString()}
-                    placeholder={t("properties.propertyType")}
                   >
-                    {propertyTypes?.map((type) => (
-                      <PropertySelectItem
-                        key={type.id}
-                        value={type.id.toString()}
-                      >
-                        {isRTL ? type.nameAr : type.nameEn}
-                      </PropertySelectItem>
-                    ))}
-                  </PropertySelect>
+                    <SelectTrigger
+                      className={isRTL ? "text-right" : "text-left"}
+                    >
+                      <SelectValue placeholder={t("properties.propertyType")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {propertyTypes?.map((type) => (
+                        <SelectItem key={type.id} value={type.id.toString()}>
+                          {isRTL ? type.nameAr : type.nameEn}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 )}
               />
               {errors.propertyTypeId && (
@@ -133,20 +186,23 @@ const BasicInfoSection = ({
                 name="listingTypeId"
                 control={control}
                 render={({ field }) => (
-                  <PropertySelect
+                  <Select
                     onValueChange={(value) => field.onChange(Number(value))}
                     value={field.value?.toString()}
-                    placeholder={t("properties.listingType")}
                   >
-                    {listingTypes?.map((type) => (
-                      <PropertySelectItem
-                        key={type.id}
-                        value={type.id.toString()}
-                      >
-                        {isRTL ? type.nameAr : type.nameEn}
-                      </PropertySelectItem>
-                    ))}
-                  </PropertySelect>
+                    <SelectTrigger
+                      className={isRTL ? "text-right" : "text-left"}
+                    >
+                      <SelectValue placeholder={t("properties.listingType")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {listingTypes?.map((type) => (
+                        <SelectItem key={type.id} value={type.id.toString()}>
+                          {isRTL ? type.nameAr : type.nameEn}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 )}
               />
               {errors.listingTypeId && (
@@ -161,5 +217,3 @@ const BasicInfoSection = ({
     </div>
   );
 };
-
-export default BasicInfoSection;

@@ -18,7 +18,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    toast.success(t("auth.login.loginSuccess"));
+    toast.success(t("auth.logout.success"));
     navigate("/auth/login");
   };
 

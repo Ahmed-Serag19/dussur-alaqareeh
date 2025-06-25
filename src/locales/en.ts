@@ -65,6 +65,9 @@ const en = {
       confirmPasswordRequired: "Confirm password is required",
       passwordsNotMatch: "Passwords do not match",
     },
+    logout: {
+      success: "Logged out successfully",
+    },
   },
 
   // Dashboard

@@ -6,5 +6,5 @@ export const login = (data: LoginDto) => {
 };
 
 export const register = (data: RegisterDto) => {
-  return axiosInstance.post("/auth/register", data);
+  return axiosInstance.post("/auth/register-admin", data);
 };
