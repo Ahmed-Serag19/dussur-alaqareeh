@@ -56,10 +56,10 @@ export const createProperty = async (data: CreatePropertyDto) => {
     floorsCount: data.floorsCount,
     buildingAge: data.buildingAge,
     statusId: data.statusId,
-    createdBy: 1001, // Default createdBy
+    createdBy: 1001, // ALWAYS 1001
   };
 
-  console.log("Transformed API payload:", apiPayload);
+  console.log("Final API payload being sent:", apiPayload);
 
   try {
     const response = await axiosInstance.post("/properties/add", apiPayload);

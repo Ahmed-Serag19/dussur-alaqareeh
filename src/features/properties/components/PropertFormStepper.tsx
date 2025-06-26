@@ -1,5 +1,4 @@
 import type React from "react";
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";

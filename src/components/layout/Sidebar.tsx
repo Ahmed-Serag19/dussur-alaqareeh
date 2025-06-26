@@ -1,7 +1,7 @@
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Plus, Eye, User, LogOut, Home } from "lucide-react";
+import { Plus, Eye, LogOut, Home } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-hot-toast";
 import MainLayoutLogo from "@/assets/images/main-layout-logo.png";
@@ -35,14 +35,14 @@ const Sidebar = () => {
     },
     {
       name: t("sidebar.viewProperties"),
-      href: "/",
+      href: "/properties",
       icon: Eye,
     },
-    {
-      name: t("sidebar.profile"),
-      href: "/",
-      icon: User,
-    },
+    // {
+    //   name: t("sidebar.profile"),
+    //   href: "/",
+    //   icon: User,
+    // },
   ];
 
   return (
@@ -66,9 +66,9 @@ const Sidebar = () => {
               to={item.href}
               onClick={() => width && width < 768 && setOpen(false)}
               className={cn(
-                "flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200",
+                "flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-100",
                 isActive
-                  ? "bg-blue-50 text-blue-950 border-r-2 border-blue-950 shadow-sm"
+                  ? "bg-blue-50 text-blue-950  border-blue-950 shadow-sm"
                   : "text-gray-700 hover:text-gray-900 hover:bg-blue-100",
                 isRTL ? "text-right" : "text-left"
               )}
@@ -85,7 +85,7 @@ const Sidebar = () => {
             variant="ghost"
             onClick={handleLogout}
             className={cn(
-              "w-full justify-start gap-3 px-4 py-3 text-red-600 hover:text-red-700 hover:bg-red-50 transition-all duration-200",
+              "w-full justify-center flex items-center cursor-pointer gap-3 px-4 py-4 text-red-600 hover:text-red-700 hover:bg-red-100 transition duration-200",
               isRTL ? "text-right" : "text-left"
             )}
           >

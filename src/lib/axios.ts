@@ -7,12 +7,9 @@ export const axiosInstance = axios.create({
   },
 });
 
-// ✅ Automatically attach token only if it exists, and skip for public endpoints
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
-
-    // Skip adding token for login or register endpoints
     const isPublicEndpoint =
       config.url?.includes("/auth/login") ||
       config.url?.includes("/auth/register");

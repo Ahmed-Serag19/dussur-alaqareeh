@@ -1,5 +1,3 @@
-"use client";
-
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
@@ -72,7 +70,7 @@ export const usePropertySubmission = () => {
       floorsCount: data.floorsCount,
       buildingAge: data.buildingAge,
       statusId: 1,
-      createdBy: 1001,
+      createdBy: 1001, // ALWAYS 1001
     };
 
     console.log("Final property data being sent:", propertyData);
