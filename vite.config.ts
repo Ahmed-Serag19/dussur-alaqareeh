@@ -8,10 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export default defineConfig({
-  plugins: [
-    react(),
-    tailwind(), // ✅ Tailwind v4 Vite plugin
-  ],
+  plugins: [react(), tailwind()],
   resolve: {
     alias: {
       "@": resolve(__dirname, "src"),

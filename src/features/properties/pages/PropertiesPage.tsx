@@ -1,42 +1,74 @@
-import { useQuery } from "@tanstack/react-query";
+"use client";
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus, RefreshCw } from "lucide-react";
 import { Link } from "react-router-dom";
 import { PropertyList } from "@/features/properties/components/PropertyList";
-import { getMyProperties } from "@/features/properties/api/properties-list.api";
-import type { Property } from "@/features/properties/types/property-response.types";
+import { PropertyStatusTabs } from "@/features/properties/components/PropertyStatusTabs";
+import { PropertyViewModal } from "@/features/properties/components/PropertyViewModal";
+import { usePropertiesData } from "@/features/properties/hooks/usePropertiesData";
+import { useLookupData } from "@/features/properties/hooks/useLookupData";
+import type {
+  Property,
+  PropertyStatus,
+} from "@/features/properties/types/property-response.types";
 import useLanguage from "@/hooks/useLanguage";
 import { toast } from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 export const PropertiesPage = () => {
   const { isRTL } = useLanguage();
+  const { t } = useTranslation();
+  const [activeTab, setActiveTab] = useState<PropertyStatus | "ALL">("ALL");
+  const [viewModal, setViewModal] = useState<{
+    isOpen: boolean;
+    property: Property | null;
+  }>({
+    isOpen: false,
+    property: null,
+  });
 
   const {
-    data: properties = [],
     isLoading,
     error,
     refetch,
-  } = useQuery({
-    queryKey: ["my-properties"],
-    queryFn: getMyProperties,
-    staleTime: 1000 * 60 * 5, // 5 minutes
-  });
+    getPropertiesByStatus,
+    getCounts,
+    deleteProperty,
+    isDeletingProperty,
+  } = usePropertiesData();
+
+  // Preload lookup data
+  const { isLoading: isLoadingLookup } = useLookupData();
 
   const handleViewProperty = (property: Property) => {
-    // TODO: Navigate to property details page
-    console.log("View property:", property);
-    toast.success(`عرض تفاصيل العقار: ${property.title}`);
+    setViewModal({
+      isOpen: true,
+      property,
+    });
   };
 
   const handleEditProperty = (property: Property) => {
     // TODO: Navigate to edit property page
     console.log("Edit property:", property);
-    toast.success(`تعديل العقار: ${property.title}`);
+    toast.success(t("properties.list.editProperty", { title: property.title }));
   };
 
   const handleRefresh = () => {
     refetch();
-    toast.success("تم تحديث قائمة العقارات");
+    toast.success(t("properties.list.refreshSuccess"));
+  };
+
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab as PropertyStatus | "ALL");
+  };
+
+  const handleCloseViewModal = () => {
+    setViewModal({
+      isOpen: false,
+      property: null,
+    });
   };
 
   if (error) {
@@ -48,68 +80,96 @@ export const PropertiesPage = () => {
           }`}
         >
           <div className={isRTL ? "text-right" : "text-left"}>
-            <h1 className="text-3xl font-bold text-gray-900">عقاراتي</h1>
-            <p className="text-gray-600 mt-2">إدارة جميع العقارات الخاصة بك</p>
+            <h1 className="text-3xl font-bold text-gray-900">
+              {t("properties.list.title")}
+            </h1>
+            <p className="text-gray-600 mt-2">
+              {t("properties.list.subtitle")}
+            </p>
           </div>
         </div>
 
         <div className="text-center py-12">
           <div className="text-red-400 text-6xl mb-4">⚠️</div>
           <h3 className="text-lg font-semibold text-gray-900 mb-2">
-            حدث خطأ في تحميل العقارات
+            {t("properties.list.errorTitle")}
           </h3>
           <p className="text-gray-600 mb-4">
-            تعذر تحميل قائمة العقارات. يرجى المحاولة مرة أخرى.
+            {t("properties.list.errorMessage")}
           </p>
           <Button onClick={handleRefresh} variant="outline">
             <RefreshCw className="h-4 w-4 mr-2" />
-            إعادة المحاولة
+            {t("common.retry")}
           </Button>
         </div>
       </div>
     );
   }
 
+  const currentProperties = getPropertiesByStatus(activeTab);
+  const counts = getCounts();
+  const isLoadingData = isLoading || isLoadingLookup;
+
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div
-        className={`flex items-center justify-between ${
-          isRTL ? "flex-row-reverse" : ""
-        }`}
-      >
-        <div className={isRTL ? "text-right" : "text-left"}>
-          <h1 className="text-3xl font-bold text-gray-900">عقاراتي</h1>
-          <p className="text-gray-600 mt-2">إدارة جميع العقارات الخاصة بك</p>
+    <>
+      <div className="space-y-6">
+        <div
+          className={`flex items-center justify-between ${
+            isRTL ? "flex-row-reverse" : ""
+          }`}
+        >
+          <div className="flex items-center gap-3">
+            <Button
+              variant="outline"
+              onClick={handleRefresh}
+              disabled={isLoadingData}
+            >
+              <RefreshCw
+                className={`h-4 w-4 mr-2 ${
+                  isLoadingData ? "animate-spin" : ""
+                }`}
+              />
+              {t("common.refresh")}
+            </Button>
+            <Link to="/properties/add">
+              <Button className="gap-2">
+                <Plus className="h-4 w-4" />
+                {t("properties.list.addNew")}
+              </Button>
+            </Link>
+          </div>
+          <div className={isRTL ? "text-right" : "text-left"}>
+            <h1 className="text-3xl font-bold text-gray-900">
+              {t("properties.list.title")}
+            </h1>
+            <p className="text-gray-600 mt-2">
+              {t("properties.list.subtitle")}
+            </p>
+          </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          <Button
-            variant="outline"
-            onClick={handleRefresh}
-            disabled={isLoading}
-          >
-            <RefreshCw
-              className={`h-4 w-4 mr-2 ${isLoading ? "animate-spin" : ""}`}
-            />
-            تحديث
-          </Button>
-          <Link to="/properties/add">
-            <Button className="gap-2">
-              <Plus className="h-4 w-4" />
-              إضافة عقار جديد
-            </Button>
-          </Link>
-        </div>
+        <PropertyStatusTabs
+          activeTab={activeTab}
+          onTabChange={handleTabChange}
+          counts={counts}
+        >
+          <PropertyList
+            properties={currentProperties}
+            isLoading={isLoadingData}
+            onViewProperty={handleViewProperty}
+            onEditProperty={handleEditProperty}
+            onDeleteProperty={deleteProperty}
+            isDeletingProperty={isDeletingProperty}
+          />
+        </PropertyStatusTabs>
       </div>
 
-      {/* Properties List */}
-      <PropertyList
-        properties={properties}
-        isLoading={isLoading}
-        onViewProperty={handleViewProperty}
-        onEditProperty={handleEditProperty}
+      <PropertyViewModal
+        property={viewModal.property}
+        isOpen={viewModal.isOpen}
+        onClose={handleCloseViewModal}
+        onEdit={handleEditProperty}
       />
-    </div>
+    </>
   );
 };

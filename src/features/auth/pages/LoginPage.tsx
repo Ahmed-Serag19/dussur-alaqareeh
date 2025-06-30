@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { Lock } from "lucide-react";
@@ -10,20 +9,21 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import LoginForm from "@/features/auth/components/LoginForm";
-import { login } from "@/features/auth/api/auth.api";
+import { handleLogin } from "@/features/auth/api/auth.api";
 import type { LoginDto } from "@/features/auth/types/auth.types";
 import useLanguage from "@/hooks/useLanguage";
+import { useAdmin } from "@/context/AdminContext";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  const navigate = useNavigate();
   const { t } = useLanguage();
-
+  const { login } = useAdmin();
+  const navigate = useNavigate();
   const loginMutation = useMutation({
-    mutationFn: login,
+    mutationFn: handleLogin,
     onSuccess: (response) => {
-      toast.success(t("auth.login.loginSuccess"));
-      localStorage.setItem("token", response.data.token);
-      navigate("/");
+      const token = response.data.token;
+      login(token, navigate);
     },
     onError: (error: any) => {
       toast.error(error.response?.data?.message || t("auth.login.loginError"));

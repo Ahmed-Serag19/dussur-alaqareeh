@@ -124,39 +124,6 @@ const RegisterForm = ({ onSubmit, isLoading }: RegisterFormProps) => {
         />
       </FormField>
 
-      {/* <FormField
-        label={t("auth.register.confirmPassword")}
-        htmlFor="confirmPassword"
-        error={
-          typeof errors.confirmPassword?.message === "string"
-            ? errors.confirmPassword.message
-            : undefined
-        }
-        required
-      >
-        <InputWithIcon
-          id="confirmPassword"
-          type={showConfirmPassword ? "text" : "password"}
-          placeholder={t("auth.register.confirmPasswordPlaceholder")}
-          icon={<Lock className="h-5 w-5" />}
-          rightIcon={
-            <button
-              type="button"
-              onClick={toggleConfirmPassword}
-              className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
-            >
-              {showConfirmPassword ? (
-                <EyeOff className="h-5 w-5" />
-              ) : (
-                <Eye className="h-5 w-5" />
-              )}
-            </button>
-          }
-          focusColor="orange"
-          {...register("confirmPassword")}
-        />
-      </FormField> */}
-
       <GradientButton
         type="submit"
         className="w-full h-12 mt-2"

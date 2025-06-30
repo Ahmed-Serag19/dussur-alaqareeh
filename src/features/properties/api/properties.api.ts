@@ -1,36 +1,9 @@
 import { axiosInstance } from "@/lib/axios";
-
-export interface CreatePropertyDto {
-  title: string;
-  description: string;
-  descriptionAr: string;
-  descriptionEn: string;
-  price: number;
-  cityId: number;
-  regionId: number;
-  neighborhoodId: number;
-  propertyTypeId: number;
-  listingTypeId: number;
-  conditionId: number;
-  finishTypeId: number;
-  streetAr: string;
-  streetEn: string;
-  longitude: number;
-  latitude: number;
-  area: number;
-  roomsCount: number;
-  bathroomsCount: number;
-  livingroomsCount: number;
-  floorsCount: number;
-  buildingAge: number;
-  statusId: number;
-  createdBy: number;
-}
+import type { CreatePropertyDto } from "../types/property.types";
 
 export const createProperty = async (data: CreatePropertyDto) => {
   console.log("API call - Creating property with data:", data);
 
-  // Send exactly what the backend expects
   const apiPayload = {
     title: data.title,
     description: data.description,
@@ -38,7 +11,6 @@ export const createProperty = async (data: CreatePropertyDto) => {
     cityId: data.cityId,
     regionId: data.regionId,
     neighborhoodId: data.neighborhoodId,
-    typeId: data.propertyTypeId, // typeId = propertyTypeId
     propertyTypeId: data.propertyTypeId,
     listingTypeId: data.listingTypeId,
     conditionId: data.conditionId,
@@ -56,13 +28,13 @@ export const createProperty = async (data: CreatePropertyDto) => {
     floorsCount: data.floorsCount,
     buildingAge: data.buildingAge,
     statusId: data.statusId,
-    createdBy: 1001, // ALWAYS 1001
   };
 
-  console.log("Final API payload being sent:", apiPayload);
-
   try {
-    const response = await axiosInstance.post("/properties/add", apiPayload);
+    const response = await axiosInstance.post(
+      "/temp-properties/addProperty",
+      apiPayload
+    );
     console.log("API response:", response);
     return response;
   } catch (error) {

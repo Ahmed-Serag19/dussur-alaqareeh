@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import PropertyFormHeader from "@/features/properties/components/PropertyFormHeader";
-import { BasicInfoSection } from "@/features/properties/components/BasicInfoSection";
-import LocationSection from "@/features/properties/components/LocationSection";
+import BasicInfoSection from "@/features/properties/components/BasicInfoSection";
+import { LocationSection } from "@/features/properties/components/LocationSection";
 import { PropertySpecsSection } from "@/features/properties/components/PropertySpecsSection";
 import { usePropertyForm } from "@/features/properties/hooks/usePropertyForm";
 import { useLookupData } from "@/features/properties/hooks/useLookupData";
@@ -22,7 +22,7 @@ const AddPropertyPage = () => {
     setSelectedLocation,
   } = usePropertyForm();
   const { submitProperty, isLoading } = usePropertySubmission();
-  const lookupData = useLookupData(selectedRegion, selectedCity);
+  const lookupData = useLookupData();
   const { isRTL, t } = useLanguage();
 
   const {
@@ -35,16 +35,11 @@ const AddPropertyPage = () => {
   } = form;
 
   const onSubmit = async (data: CreatePropertyFormData) => {
-    console.log("Form submitted with data:", data);
-    console.log("Selected location:", selectedLocation);
-
-    // Check if location is selected
     if (!selectedLocation) {
       toast.error(t("properties.validation.locationRequired"));
       return;
     }
 
-    // Validate all required fields
     const requiredFields = [
       "title",
       "description",
@@ -69,8 +64,7 @@ const AddPropertyPage = () => {
     });
 
     if (missingFields.length > 0) {
-      console.log("Missing fields:", missingFields);
-      toast.error("Please fill in all required fields");
+      toast.error(t("properties.missingFields"));
       return;
     }
 
@@ -82,75 +76,84 @@ const AddPropertyPage = () => {
   };
 
   const nextStep = async () => {
-    // Validate current step before proceeding
-    let fieldsToValidate: (keyof CreatePropertyFormData)[] = [];
-
-    if (currentStep === 1) {
-      fieldsToValidate = [
+    const stepFields: Record<number, (keyof CreatePropertyFormData)[]> = {
+      1: [
         "title",
         "description",
         "price",
         "area",
         "propertyTypeId",
         "listingTypeId",
-      ];
-    } else if (currentStep === 2) {
-      fieldsToValidate = [
-        "regionId",
-        "cityId",
-        "neighborhoodId",
-        "streetAr",
-        "streetEn",
-      ];
-    }
+      ],
+      2: ["regionId", "cityId", "neighborhoodId", "streetAr", "streetEn"],
+    };
 
-    const isValid = await trigger(fieldsToValidate);
-    console.log("Step validation result:", isValid);
-    console.log("Current errors:", errors);
-
+    const isValid = await trigger(stepFields[currentStep] || []);
     if (isValid && currentStep < 3) {
       setCurrentStep(currentStep + 1);
     } else if (!isValid) {
-      toast.error("Please fix the errors before proceeding");
+      toast.error(t("properties.fixErrorsBeforeSubmit"));
     }
   };
 
   const prevStep = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
-    }
+    if (currentStep > 1) setCurrentStep(currentStep - 1);
   };
 
   const handleFinalSubmit = async () => {
-    console.log("Final submit triggered");
-
-    // Validate all fields before submission
     const isValid = await trigger();
-    console.log("Final validation result:", isValid);
-
     if (isValid) {
       const formData = getValues();
       await onSubmit(formData);
     } else {
-      console.log("Form validation failed:", errors);
-      toast.error("Please fix all errors before submitting");
+      toast.error(t("properties.fixErrorsBeforeSubmit"));
     }
   };
 
   const steps = [
     {
       title: t("properties.basicInfo"),
-      description: "Enter basic property information",
+      description: t("properties.basicInfoDescription"),
     },
     {
       title: t("properties.locationInfo"),
-      description: "Location details and map selection",
+      description: t("properties.locationInfoAndSpecs"),
     },
     {
-      title: t("properties.propertySpecs") + " & " + "التفاصيل",
-      description: "Property specifications and detailed descriptions",
+      title: t("properties.propertySpecs") + " & " + t("properties.details"),
+      description: t("properties.propertySpecs"),
     },
   ];
+
+  if (lookupData.isLoading) {
+    return (
+      <div className="space-y-6">
+        <PropertyFormHeader />
+        <div className="flex items-center justify-center py-12">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">{t("common.loading")}...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (lookupData.error) {
+    return (
+      <div className="space-y-6">
+        <PropertyFormHeader />
+        <div className="flex items-center justify-center py-12">
+          <div className="text-center">
+            <p className="text-red-600 mb-4">{t("properties.loadError")}</p>
+            <Button onClick={() => lookupData.refetch()} variant="outline">
+              {t("common.tryAgain")}
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -168,7 +171,8 @@ const AddPropertyPage = () => {
             </p>
           </div>
           <span className="text-sm text-gray-500">
-            Step {currentStep} of {steps.length}
+            {t("properties.step")} {currentStep} {t("properties.of")}{" "}
+            {steps.length}
           </span>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-2">
@@ -180,48 +184,37 @@ const AddPropertyPage = () => {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        {/* Step 1: Basic Information */}
         {currentStep === 1 && (
-          <div className="space-y-6">
-            <BasicInfoSection
-              control={control}
-              register={register}
-              errors={errors}
-              propertyTypes={lookupData.propertyTypes}
-              listingTypes={lookupData.listingTypes}
-            />
-          </div>
+          <BasicInfoSection
+            control={control}
+            register={register}
+            errors={errors}
+            propertyTypes={lookupData.propertyTypes}
+            listingTypes={lookupData.listingTypes}
+          />
         )}
-
-        {/* Step 2: Location Information */}
         {currentStep === 2 && (
-          <div className="space-y-6">
-            <LocationSection
-              control={control}
-              register={register}
-              errors={errors}
-              regions={lookupData.regions}
-              cities={lookupData.cities}
-              neighborhoods={lookupData.neighborhoods}
-              selectedRegion={selectedRegion}
-              selectedCity={selectedCity}
-              selectedLocation={selectedLocation}
-              setSelectedLocation={setSelectedLocation}
-            />
-          </div>
+          <LocationSection
+            control={control}
+            register={register}
+            errors={errors}
+            regions={lookupData.regions}
+            cities={lookupData.getCitiesByRegion(selectedRegion || 0)}
+            neighborhoods={lookupData.getNeighborhoodsByCity(selectedCity || 0)}
+            selectedRegion={selectedRegion}
+            selectedCity={selectedCity}
+            selectedLocation={selectedLocation}
+            setSelectedLocation={setSelectedLocation}
+          />
         )}
-
-        {/* Step 3: Property Specifications & Detailed Descriptions */}
         {currentStep === 3 && (
-          <div className="space-y-6">
-            <PropertySpecsSection
-              control={control}
-              register={register}
-              errors={errors}
-              conditions={lookupData.conditions}
-              finishTypes={lookupData.finishTypes}
-            />
-          </div>
+          <PropertySpecsSection
+            control={control}
+            register={register}
+            errors={errors}
+            conditions={lookupData.propertyConditions}
+            finishTypes={lookupData.finishingTypes}
+          />
         )}
 
         {/* Navigation Buttons */}
@@ -234,7 +227,7 @@ const AddPropertyPage = () => {
             className="flex items-center gap-2"
           >
             <ChevronLeft className={`h-4 w-4 ${isRTL ? "rotate-180" : ""}`} />
-            Previous
+            {t("common.previous")}
           </Button>
 
           {currentStep === steps.length ? (
@@ -252,7 +245,7 @@ const AddPropertyPage = () => {
               onClick={nextStep}
               className="flex items-center gap-2"
             >
-              Next
+              {t("common.next")}
               <ChevronRight
                 className={`h-4 w-4 ${isRTL ? "rotate-180" : ""}`}
               />

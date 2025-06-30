@@ -32,6 +32,7 @@ const ar = {
       createAccount: "إنشاء حساب جديد",
       loginSuccess: "تم تسجيل الدخول بنجاح",
       loginError: "حدث خطأ في تسجيل الدخول",
+      invalidRole: "يجب ان تكون ادمن للدخول لتلك الصفحة",
     },
     register: {
       title: "إنشاء حساب جديد",
@@ -104,8 +105,16 @@ const ar = {
     export: "تصدير",
     import: "استيراد",
     refresh: "تحديث",
+    retry: "إعادة المحاولة",
     or: "أو",
+    previous: "السابق",
+    next: "التالي",
+    close: "إغلاق",
+    confirm: "تأكيد",
+    yes: "نعم",
+    no: "لا",
   },
+
   // Properties
   properties: {
     addProperty: "إضافة عقار جديد",
@@ -116,7 +125,22 @@ const ar = {
     propertyFeatures: "مميزات العقار",
     details: "تفاصيل العقار",
     locationInfoAndSpecs: "المنطقة مدينة حي الخ..",
-
+    basicInfoDescription: "أدخل المعلومات الأساسية للعقار",
+    descriptionPlaceholder: "أدخل وصفًا للعقار",
+    shortDescription: "نبذة سريعة",
+    createSuccess: "تم إنشاء العقار بنجاح",
+    createError: "حدث خطأ أثناء إنشاء العقار",
+    saveDraftSuccess: "تم حفظ العقار كمسودة",
+    locationRequiredToast: "يرجى تحديد الموقع على الخريطة",
+    fixErrorsBeforeSubmit: "يرجى تصحيح جميع الأخطاء قبل الإرسال",
+    missingFields: "بعض الحقول المطلوبة مفقودة",
+    systemInformation: "تفاصيل النظام",
+    loadError: "فشل في تحميل بيانات النموذج",
+    step: "الخطوة",
+    of: "من",
+    streetArPlaceholder: "ادخل اسم الشارع بالعربية",
+    streetEnPlaceholder: " ادخل اسم الشارع بالانجليزية",
+    selectOnMap: "حدد المكان",
     // Form fields
     title: "اسم العقار",
     titlePlaceholder: "أدخل اسم للعقار",
@@ -174,9 +198,60 @@ const ar = {
       locationRequired: "الموقع مطلوب",
     },
 
-    // Success/Error messages
-    createSuccess: "تم إنشاء العقار بنجاح",
-    createError: "حدث خطأ في إنشاء العقار",
+    // Status
+    status: {
+      all: "جميع العقارات",
+      pending: "قيد المراجعة",
+      approved: "مقبولة",
+      rejected: "مرفوضة",
+    },
+
+    // Actions
+    actions: {
+      view: "عرض",
+      edit: "تعديل",
+      delete: "حذف",
+    },
+
+    // Delete
+    delete: {
+      title: "حذف العقار",
+      message: "هل أنت متأكد من حذف هذا العقار؟",
+      warning: "هذا الإجراء لا يمكن التراجع عنه.",
+      confirm: "حذف العقار",
+      deleting: "جاري الحذف...",
+      success: "تم حذف العقار بنجاح",
+      error: "حدث خطأ أثناء حذف العقار",
+    },
+
+    // List
+    list: {
+      title: "عقاراتي",
+      subtitle: "إدارة جميع العقارات الخاصة بك",
+      addNew: "إضافة عقار جديد",
+      refreshSuccess: "تم تحديث قائمة العقارات",
+      viewProperty: "عرض تفاصيل العقار: {{title}}",
+      editProperty: "تعديل العقار: {{title}}",
+      errorTitle: "حدث خطأ في تحميل العقارات",
+      errorMessage: "تعذر تحميل قائمة العقارات. يرجى المحاولة مرة أخرى.",
+      noProperties: "لا توجد عقارات",
+      noPropertiesMessage:
+        "لم يتم العثور على أي عقارات. ابدأ بإضافة عقار جديد.",
+    },
+
+    // View Modal
+    viewModal: {
+      title: "تفاصيل العقار",
+      generalInfo: "المعلومات العامة",
+      locationDetails: "تفاصيل الموقع",
+      propertySpecs: "مواصفات العقار",
+      coordinates: "الإحداثيات",
+      createdAt: "تاريخ الإنشاء",
+      updatedAt: "تاريخ التحديث",
+      propertyId: "رقم العقار",
+      adminId: "رقم المدير",
+      statusId: "رقم الحالة",
+    },
   },
 };
 

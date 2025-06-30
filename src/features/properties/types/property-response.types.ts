@@ -12,8 +12,8 @@ export interface Property {
   price: number;
   status: "PENDING" | "APPROVED" | "REJECTED";
   cityId: number;
-  typeId: number;
   conditionId: number;
+  adminId: number;
   finishTypeId: number;
   propertyTypeId: number;
   regionId: number;
@@ -34,14 +34,21 @@ export interface Property {
   statusId: number;
   createdAt: string;
   updatedAt: string;
-  createdByUser: PropertyUser;
 }
 
+export type PropertyStatus = "PENDING" | "APPROVED" | "REJECTED";
+
 export interface PropertyFilters {
-  status?: string;
+  status?: PropertyStatus;
   cityId?: number;
   propertyTypeId?: number;
   minPrice?: number;
   maxPrice?: number;
   search?: string;
+}
+
+export interface PropertiesData {
+  pending: Property[];
+  approved: Property[];
+  rejected: Property[];
 }

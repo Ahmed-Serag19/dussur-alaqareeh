@@ -1,135 +1,104 @@
+import { PropertyCard } from "./PropertyCard";
+import { PropertyDeleteDialog } from "./PropertyDeleteDialog";
+import type { Property } from "@/features/properties/types/property-response.types";
+import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import PropertyCard from "./PropertyCard";
-import PropertyFilters from "./PropertyFilters";
-import type {
-  Property,
-  PropertyFilters as PropertyFiltersType,
-} from "@/features/properties/types/property-response.types";
-import useLanguage from "@/hooks/useLanguage";
 
 interface PropertyListProps {
   properties: Property[];
-  isLoading?: boolean;
-  onViewProperty?: (property: Property) => void;
-  onEditProperty?: (property: Property) => void;
+  isLoading: boolean;
+  onViewProperty: (property: Property) => void;
+  onEditProperty: (property: Property) => void;
+  onDeleteProperty: (id: number) => void;
+  isDeletingProperty?: boolean;
 }
 
 export const PropertyList = ({
   properties,
-  isLoading = false,
+  isLoading,
   onViewProperty,
   onEditProperty,
+  onDeleteProperty,
+  isDeletingProperty = false,
 }: PropertyListProps) => {
-  const { isRTL } = useLanguage();
-  const [filters, setFilters] = useState<PropertyFiltersType>({});
-
-  const filteredProperties = properties.filter((property) => {
-    // Search filter
-    if (filters.search) {
-      const searchTerm = filters.search.toLowerCase();
-      const matchesSearch =
-        property.title.toLowerCase().includes(searchTerm) ||
-        property.description.toLowerCase().includes(searchTerm) ||
-        property.streetAr.toLowerCase().includes(searchTerm) ||
-        property.streetEn.toLowerCase().includes(searchTerm);
-
-      if (!matchesSearch) return false;
-    }
-
-    // Status filter
-    if (filters.status && property.status !== filters.status) {
-      return false;
-    }
-
-    // Price filters
-    if (filters.minPrice && property.price < filters.minPrice) {
-      return false;
-    }
-    if (filters.maxPrice && property.price > filters.maxPrice) {
-      return false;
-    }
-
-    // Property type filter
-    if (
-      filters.propertyTypeId &&
-      property.propertyTypeId !== filters.propertyTypeId
-    ) {
-      return false;
-    }
-
-    return true;
+  const { t } = useTranslation();
+  const [deleteDialog, setDeleteDialog] = useState<{
+    isOpen: boolean;
+    property: Property | null;
+  }>({
+    isOpen: false,
+    property: null,
   });
 
-  const handleClearFilters = () => {
-    setFilters({});
+  const handleDeleteClick = (property: Property) => {
+    setDeleteDialog({
+      isOpen: true,
+      property,
+    });
+  };
+
+  const handleDeleteConfirm = (id: number) => {
+    onDeleteProperty(id);
+    setDeleteDialog({
+      isOpen: false,
+      property: null,
+    });
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteDialog({
+      isOpen: false,
+      property: null,
+    });
   };
 
   if (isLoading) {
     return (
-      <div className="space-y-6">
-        <PropertyFilters
-          filters={filters}
-          onFiltersChange={setFilters}
-          onClearFilters={handleClearFilters}
-        />
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="animate-pulse">
-              <div className="bg-gray-200 rounded-lg h-80"></div>
-            </div>
-          ))}
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <div key={index} className="animate-pulse">
+            <div className="bg-gray-200 rounded-lg h-64"></div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (properties.length === 0) {
+    return (
+      <div className="text-center py-12">
+        <div className="text-gray-400 text-6xl mb-4">🏠</div>
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          {t("properties.list.noProperties")}
+        </h3>
+        <p className="text-gray-600">
+          {t("properties.list.noPropertiesMessage")}
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      <PropertyFilters
-        filters={filters}
-        onFiltersChange={setFilters}
-        onClearFilters={handleClearFilters}
-      />
-
-      {/* Results Summary */}
-      <div
-        className={`flex items-center justify-between ${
-          isRTL ? "flex-row-reverse" : ""
-        }`}
-      >
-        <p className="text-gray-600">
-          عرض {filteredProperties.length} من أصل {properties.length} عقار
-        </p>
-        {filteredProperties.length !== properties.length && (
-          <p className="text-sm text-blue-600">تم تطبيق فلاتر البحث</p>
-        )}
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-1 justify-center lg:grid-cols-2  gap-6">
+        {properties.map((property) => (
+          <PropertyCard
+            key={property.id}
+            property={property}
+            onView={onViewProperty}
+            onEdit={onEditProperty}
+            onDelete={handleDeleteClick}
+          />
+        ))}
       </div>
 
-      {/* Properties Grid */}
-      {filteredProperties.length > 0 ? (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {filteredProperties.map((property) => (
-            <PropertyCard
-              key={property.id}
-              property={property}
-              onView={onViewProperty}
-              onEdit={onEditProperty}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="text-center py-12">
-          <div className="text-gray-400 text-6xl mb-4">🏠</div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">
-            لا توجد عقارات
-          </h3>
-          <p className="text-gray-600">
-            {properties.length === 0
-              ? "لم تقم بإضافة أي عقارات بعد"
-              : "لا توجد عقارات تطابق معايير البحث"}
-          </p>
-        </div>
-      )}
-    </div>
+      <PropertyDeleteDialog
+        property={deleteDialog.property}
+        isOpen={deleteDialog.isOpen}
+        onClose={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        isDeleting={isDeletingProperty}
+      />
+    </>
   );
 };

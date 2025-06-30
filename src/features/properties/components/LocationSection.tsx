@@ -1,22 +1,27 @@
-import { useState } from "react";
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import PropertyInput from "@/components/ui/property-input";
+import { Input } from "@/components/ui/input";
 import {
-  PropertySelect,
-  PropertySelectItem,
-} from "@/components/ui/property-select";
-import MapModal from "./MapModal";
-import { MapPin, CheckCircle } from "lucide-react";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { MapPin } from "lucide-react";
 import { Controller, type Control, type FieldErrors } from "react-hook-form";
 import type { CreatePropertyFormData } from "@/features/properties/types/property.types";
 import type {
   LookupItem,
   CityItem,
   NeighborhoodItem,
-} from "@/features/properties/api/lookup.api";
+} from "@/features/properties/types/lookup.types";
 import useLanguage from "@/hooks/useLanguage";
+import MapModal from "./MapModal";
+import { useState } from "react";
 
 interface LocationSectionProps {
   control: Control<CreatePropertyFormData>;
@@ -31,13 +36,13 @@ interface LocationSectionProps {
   setSelectedLocation: (location: { lat: number; lng: number } | null) => void;
 }
 
-const LocationSection = ({
+export const LocationSection = ({
   control,
   register,
   errors,
-  regions,
-  cities,
-  neighborhoods,
+  regions = [],
+  cities = [],
+  neighborhoods = [],
   selectedRegion,
   selectedCity,
   selectedLocation,
@@ -46,12 +51,8 @@ const LocationSection = ({
   const { isRTL, t } = useLanguage();
   const [isMapModalOpen, setIsMapModalOpen] = useState(false);
 
-  const selectedCityName =
-    cities?.find((city) => city.id === selectedCity)?.nameAr ||
-    cities?.find((city) => city.id === selectedCity)?.nameEn;
-
   return (
-    <>
+    <div className="space-y-6">
       <Card>
         <CardHeader>
           <CardTitle className={isRTL ? "text-right" : "text-left"}>
@@ -59,7 +60,7 @@ const LocationSection = ({
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 lg:grid-cols-3">
             <div className="space-y-2">
               <Label
                 className={`block text-sm font-medium ${
@@ -72,20 +73,26 @@ const LocationSection = ({
                 name="regionId"
                 control={control}
                 render={({ field }) => (
-                  <PropertySelect
+                  <Select
                     onValueChange={(value) => field.onChange(Number(value))}
                     value={field.value?.toString()}
-                    placeholder={t("properties.selectRegion")}
                   >
-                    {regions?.map((region) => (
-                      <PropertySelectItem
-                        key={region.id}
-                        value={region.id.toString()}
-                      >
-                        {isRTL ? region.nameAr : region.nameEn}
-                      </PropertySelectItem>
-                    ))}
-                  </PropertySelect>
+                    <SelectTrigger
+                      className={isRTL ? "text-right" : "text-left"}
+                    >
+                      <SelectValue placeholder={t("properties.selectRegion")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {regions.map((region) => (
+                        <SelectItem
+                          key={region.id}
+                          value={region.id.toString()}
+                        >
+                          {isRTL ? region.nameAr : region.nameEn}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 )}
               />
               {errors.regionId && (
@@ -107,21 +114,24 @@ const LocationSection = ({
                 name="cityId"
                 control={control}
                 render={({ field }) => (
-                  <PropertySelect
+                  <Select
                     onValueChange={(value) => field.onChange(Number(value))}
                     value={field.value?.toString()}
                     disabled={!selectedRegion}
-                    placeholder={t("properties.selectCity")}
                   >
-                    {cities?.map((city) => (
-                      <PropertySelectItem
-                        key={city.id}
-                        value={city.id.toString()}
-                      >
-                        {isRTL ? city.nameAr : city.nameEn}
-                      </PropertySelectItem>
-                    ))}
-                  </PropertySelect>
+                    <SelectTrigger
+                      className={isRTL ? "text-right" : "text-left"}
+                    >
+                      <SelectValue placeholder={t("properties.selectCity")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {cities.map((city) => (
+                        <SelectItem key={city.id} value={city.id.toString()}>
+                          {isRTL ? city.nameAr : city.nameEn}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 )}
               />
               {errors.cityId && (
@@ -143,21 +153,29 @@ const LocationSection = ({
                 name="neighborhoodId"
                 control={control}
                 render={({ field }) => (
-                  <PropertySelect
+                  <Select
                     onValueChange={(value) => field.onChange(Number(value))}
                     value={field.value?.toString()}
                     disabled={!selectedCity}
-                    placeholder={t("properties.selectNeighborhood")}
                   >
-                    {neighborhoods?.map((neighborhood) => (
-                      <PropertySelectItem
-                        key={neighborhood.id}
-                        value={neighborhood.id.toString()}
-                      >
-                        {isRTL ? neighborhood.nameAr : neighborhood.nameEn}
-                      </PropertySelectItem>
-                    ))}
-                  </PropertySelect>
+                    <SelectTrigger
+                      className={isRTL ? "text-right" : "text-left"}
+                    >
+                      <SelectValue
+                        placeholder={t("properties.selectNeighborhood")}
+                      />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {neighborhoods.map((neighborhood) => (
+                        <SelectItem
+                          key={neighborhood.id}
+                          value={neighborhood.id.toString()}
+                        >
+                          {isRTL ? neighborhood.nameAr : neighborhood.nameEn}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 )}
               />
               {errors.neighborhoodId && (
@@ -178,9 +196,10 @@ const LocationSection = ({
               >
                 {t("properties.streetAr")}
               </Label>
-              <PropertyInput
+              <Input
                 id="streetAr"
-                className={isRTL ? "text-right" : "text-left"}
+                placeholder={t("properties.streetArPlaceholder")}
+                className="text-right"
                 {...register("streetAr")}
               />
               {errors.streetAr && (
@@ -199,9 +218,10 @@ const LocationSection = ({
               >
                 {t("properties.streetEn")}
               </Label>
-              <PropertyInput
+              <Input
                 id="streetEn"
-                className={isRTL ? "text-right" : "text-left"}
+                placeholder={t("properties.streetEnPlaceholder")}
+                className="text-left"
                 {...register("streetEn")}
               />
               {errors.streetEn && (
@@ -213,40 +233,43 @@ const LocationSection = ({
           </div>
 
           {/* Map Selection */}
-          <div className="space-y-3">
-            <Label
-              className={`block text-sm font-medium ${
-                isRTL ? "text-right" : "text-left"
-              }`}
-            >
-              {t("properties.selectLocation")}
-            </Label>
-            <div className="flex flex-col sm:flex-row gap-4 items-start">
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <Label
+                className={`block text-sm font-medium ${
+                  isRTL ? "text-right" : "text-left"
+                }`}
+              >
+                {t("properties.selectLocation")}
+              </Label>
               <Button
                 type="button"
-                variant={selectedLocation ? "outline" : "default"}
+                variant="outline"
                 onClick={() => setIsMapModalOpen(true)}
-                className="flex items-center gap-2 w-full sm:w-auto"
+                className="flex items-center gap-2"
               >
-                {selectedLocation ? (
-                  <CheckCircle className="h-4 w-4" />
-                ) : (
-                  <MapPin className="h-4 w-4" />
-                )}
-                {selectedLocation ? "Change Location" : "Select Location"}
+                <MapPin className="h-4 w-4" />
+                {selectedLocation
+                  ? t("properties.updateLocation")
+                  : t("properties.selectOnMap")}
               </Button>
-              {selectedLocation && (
-                <div className="text-sm text-gray-600 bg-green-50 border border-green-200 px-3 py-2 rounded-lg">
-                  <p className="font-medium text-green-800">
-                    ✓ Location Selected
-                  </p>
-                  <p className="text-green-600">
-                    {selectedLocation.lat.toFixed(4)},{" "}
-                    {selectedLocation.lng.toFixed(4)}
-                  </p>
-                </div>
-              )}
             </div>
+
+            {selectedLocation && (
+              <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                <div className="flex items-center gap-2 text-green-800">
+                  <MapPin className="h-4 w-4" />
+                  <span className="text-sm font-medium">
+                    {t("properties.locationSelected")}
+                  </span>
+                </div>
+                <p className="text-sm text-green-600 mt-1">
+                  {t("properties.coordinates")}:{" "}
+                  {selectedLocation.lat.toFixed(6)},{" "}
+                  {selectedLocation.lng.toFixed(6)}
+                </p>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
@@ -254,12 +277,9 @@ const LocationSection = ({
       <MapModal
         isOpen={isMapModalOpen}
         onClose={() => setIsMapModalOpen(false)}
-        onLocationSelect={setSelectedLocation}
         selectedLocation={selectedLocation}
-        cityName={selectedCityName}
+        onLocationSelect={setSelectedLocation}
       />
-    </>
+    </div>
   );
 };
-
-export default LocationSection;

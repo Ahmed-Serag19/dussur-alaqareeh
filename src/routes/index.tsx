@@ -3,11 +3,10 @@ import AuthLayout from "@/layouts/AuthLayout";
 import MainLayout from "@/layouts/MainLayout";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import RegisterPage from "@/features/auth/pages/RegisterPage";
-// import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import HomePage from "@/features/home/pages/HomePage";
 import AddPropertyPage from "@/features/properties/pages/AddPropertyPage";
 import { PropertiesPage } from "@/features/properties/pages/PropertiesPage";
-// import { PropertiesPage } from "@/features/properties/pages/properties-page";
 // import { AddPropertyPage } from "@/features/properties/pages/add-property-page";
 
 export const router = createBrowserRouter([
@@ -28,9 +27,9 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      //   <ProtectedRoute>
-      <MainLayout />
-      /* </ProtectedRoute> */
+      <ProtectedRoute>
+        <MainLayout />
+      </ProtectedRoute>
     ),
     children: [
       {

@@ -32,6 +32,7 @@ const en = {
       createAccount: "Create new account",
       loginSuccess: "Login successful",
       loginError: "Login error occurred",
+      invalidRole: "You must be an admin to access this page",
     },
     register: {
       title: "Create New Account",
@@ -104,7 +105,14 @@ const en = {
     export: "Export",
     import: "Import",
     refresh: "Refresh",
+    retry: "Retry",
     or: "Or",
+    previous: "Previous",
+    next: "Next",
+    close: "Close",
+    confirm: "Confirm",
+    yes: "Yes",
+    no: "No",
   },
 
   properties: {
@@ -115,7 +123,21 @@ const en = {
     propertySpecs: "Property Specifications",
     propertyFeatures: "Property Features",
     details: "Property Details",
-    locationInfoAndSpecs: "City Regin etc..",
+    locationInfoAndSpecs: "City Region etc..",
+    basicInfoDescription: "Enter basic property information",
+    descriptionPlaceholder: "Enter property description",
+    shortDescription: "Short description",
+    createSuccess: "Property created successfully",
+    createError: "Error creating property",
+    saveDraftSuccess: "Property saved as draft",
+    locationRequiredToast: "Please select a location on the map",
+    fixErrorsBeforeSubmit: "Please fix all errors before submitting",
+    missingFields: "Missing required fields",
+    systemInformation: "System Information",
+    loadError: "Failed to load form data",
+    saveProperty: "Save Property",
+    step: "Step",
+    of: "of",
 
     // Form fields
     title: "Property Title",
@@ -147,13 +169,15 @@ const en = {
     livingroomsCount: "Number of Living Rooms",
     floorsCount: "Number of Floors",
     buildingAge: "Building Age (years)",
+    streetEnPlaceholder: "Enter street name En",
+    streetArPlaceholder: "Enter street name in Arabic",
+    selectOnMap: "Select Location",
 
-    // Map
+    // Map selectOnMap
     selectLocation: "Select Location",
     mapInstructions: "Click on the map to select location",
 
     // Buttons
-    saveProperty: "Save Property",
     saveDraft: "Save as Draft",
     cancel: "Cancel",
 
@@ -174,9 +198,60 @@ const en = {
       locationRequired: "Location is required",
     },
 
-    // Success/Error messages
-    createSuccess: "Property created successfully",
-    createError: "Error creating property",
+    // Status
+    status: {
+      all: "All Properties",
+      pending: "Pending",
+      approved: "Approved",
+      rejected: "Rejected",
+    },
+
+    // Actions
+    actions: {
+      view: "View",
+      edit: "Edit",
+      delete: "Delete",
+    },
+
+    // Delete
+    delete: {
+      title: "Delete Property",
+      message: "Are you sure you want to delete this property?",
+      warning: "This action cannot be undone.",
+      confirm: "Delete Property",
+      deleting: "Deleting...",
+      success: "Property deleted successfully",
+      error: "Error deleting property",
+    },
+
+    // List
+    list: {
+      title: "My Properties",
+      subtitle: "Manage all your properties",
+      addNew: "Add New Property",
+      refreshSuccess: "Property list refreshed successfully",
+      viewProperty: "Viewing details of: {{title}}",
+      editProperty: "Editing property: {{title}}",
+      errorTitle: "Failed to load properties",
+      errorMessage: "Could not load property list. Please try again.",
+      noProperties: "No Properties",
+      noPropertiesMessage:
+        "No properties found. Start by adding a new property.",
+    },
+
+    // View Modal
+    viewModal: {
+      title: "Property Details",
+      generalInfo: "General Information",
+      locationDetails: "Location Details",
+      propertySpecs: "Property Specifications",
+      coordinates: "Coordinates",
+      createdAt: "Created At",
+      updatedAt: "Updated At",
+      propertyId: "Property ID",
+      adminId: "Admin ID",
+      statusId: "Status ID",
+    },
   },
 };
 

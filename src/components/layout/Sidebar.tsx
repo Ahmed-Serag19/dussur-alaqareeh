@@ -3,25 +3,19 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Plus, Eye, LogOut, Home } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { toast } from "react-hot-toast";
 import MainLayoutLogo from "@/assets/images/main-layout-logo.png";
 import { useSidebar } from "@/context/SidebarContext";
 import useWindowWidth from "@/hooks/useWindowWidth";
+import { useAdmin } from "@/context/AdminContext";
 
 const Sidebar = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const isRTL = i18n.language === "ar";
   const { setOpen } = useSidebar();
   const width = useWindowWidth();
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    toast.success(t("auth.logout.success"));
-    navigate("/auth/login");
-  };
-
+  const { logout } = useAdmin();
+  const navigate = useNavigate();
   const navigation = [
     {
       name: t("sidebar.home"),
@@ -83,7 +77,7 @@ const Sidebar = () => {
         <div className="pt-4 border-t border-gray-200 mt-8">
           <Button
             variant="ghost"
-            onClick={handleLogout}
+            onClick={() => logout(navigate)}
             className={cn(
               "w-full justify-center flex items-center cursor-pointer gap-3 px-4 py-4 text-red-600 hover:text-red-700 hover:bg-red-100 transition duration-200",
               isRTL ? "text-right" : "text-left"

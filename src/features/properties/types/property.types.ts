@@ -45,3 +45,29 @@ export const createPropertySchema = (t: any) =>
 export type CreatePropertyFormData = z.infer<
   ReturnType<typeof createPropertySchema>
 >;
+
+export interface CreatePropertyDto {
+  title: string;
+  description: string;
+  descriptionAr: string;
+  descriptionEn: string;
+  price: number;
+  cityId: number;
+  regionId: number;
+  neighborhoodId: number;
+  propertyTypeId: number;
+  listingTypeId: number;
+  conditionId: number;
+  finishTypeId: number;
+  streetAr: string;
+  streetEn: string;
+  longitude: number;
+  latitude: number;
+  area: number;
+  roomsCount: number;
+  bathroomsCount: number;
+  livingroomsCount: number;
+  floorsCount: number;
+  buildingAge: number;
+  statusId: number;
+}
