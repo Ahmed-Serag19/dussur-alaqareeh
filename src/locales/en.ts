@@ -1,9 +1,45 @@
 const en = {
+  // Common
+  common: {
+    loading: "Loading",
+    save: "Save",
+    cancel: "Cancel",
+    delete: "Delete",
+    edit: "Edit",
+    view: "View",
+    search: "Search",
+    filter: "Filter",
+    clear: "Clear",
+    submit: "Submit",
+    back: "Back",
+    next: "Next",
+    previous: "Previous",
+    close: "Close",
+    confirm: "Confirm",
+    yes: "Yes",
+    no: "No",
+    success: "Success",
+    error: "Error",
+    warning: "Warning",
+    info: "Info",
+    add: "Add",
+    export: "Export",
+    import: "Import",
+    refresh: "Refresh",
+    retry: "Retry",
+    or: "Or",
+  },
+
   // Navigation
   nav: {
+    dashboard: "Dashboard",
+    properties: "Properties",
+    addProperty: "Add Property",
+    users: "Users",
+    settings: "Settings",
+    logout: "Logout",
     notifications: "Notifications",
     profile: "Profile",
-    logout: "Logout",
     language: "Language",
   },
 
@@ -16,16 +52,25 @@ const en = {
     home: "Homepage",
   },
 
-  // Auth
+  // Authentication
   auth: {
+    rememberMe: "Remember Me",
+    loginButton: "Login",
+    registerButton: "Register",
+    alreadyHaveAccount: "Already have an account?",
+    dontHaveAccount: "Don't have an account?",
+    loginHere: "Login here",
+    registerHere: "Register here",
     login: {
       title: "Login",
-      description: "Enter your credentials to access your account",
+      login: "Login",
       email: "Email",
-      emailPlaceholder: "Enter your email",
       password: "Password",
+      confirmPassword: "Confirm Password",
+      forgotPassword: "Forgot Password?",
+      description: "Enter your credentials to access your account",
+      emailPlaceholder: "Enter your email",
       passwordPlaceholder: "Enter your password",
-      forgotPassword: "Forgot password?",
       loginButton: "Login",
       loginButtonLoading: "Logging in...",
       noAccount: "Don't have an account?",
@@ -35,17 +80,19 @@ const en = {
       invalidRole: "You must be an admin to access this page",
     },
     register: {
+      register: "Register",
+      email: "Email",
+      password: "Password",
+      confirmPassword: "Confirm Password",
+      forgotPassword: "Forgot Password?",
       title: "Create New Account",
       description: "Enter your details to create a new account",
       name: "Name",
       namePlaceholder: "Enter your full name",
-      email: "Email",
       emailPlaceholder: "Enter your email",
       phone: "Phone",
       phonePlaceholder: "Enter your phone number",
-      password: "Password",
       passwordPlaceholder: "Enter your password",
-      confirmPassword: "Confirm Password",
       confirmPasswordPlaceholder: "Re-enter your password",
       registerButton: "Create Account",
       registerButtonLoading: "Creating account...",
@@ -73,8 +120,14 @@ const en = {
 
   // Dashboard
   dashboard: {
+    welcome: "Welcome",
+    totalProperties: "Total Properties",
+    pendingProperties: "Pending Properties",
+    approvedProperties: "Approved Properties",
+    rejectedProperties: "Rejected Properties",
+    recentProperties: "Recent Properties",
+    quickActions: "Quick Actions",
     title: "Dashboard",
-    welcome: "Dusser Real Estate Management System",
     addNewProperty: "Add New Property",
     viewProperties: "View Properties",
     stats: {
@@ -89,102 +142,78 @@ const en = {
     },
   },
 
-  // Common
-  common: {
-    loading: "Loading...",
-    error: "An error occurred",
-    success: "Success",
-    cancel: "Cancel",
-    save: "Save",
-    delete: "Delete",
-    edit: "Edit",
-    view: "View",
-    add: "Add",
-    search: "Search",
-    filter: "Filter",
-    export: "Export",
-    import: "Import",
-    refresh: "Refresh",
-    retry: "Retry",
-    or: "Or",
-    previous: "Previous",
-    next: "Next",
-    close: "Close",
-    confirm: "Confirm",
-    yes: "Yes",
-    no: "No",
-  },
-
+  // Properties
   properties: {
-    addProperty: "Add New Property",
-    propertyDetails: "Property Details",
+    // Basic Info
     basicInfo: "Basic Information",
-    locationInfo: "Location Information",
-    propertySpecs: "Property Specifications",
-    propertyFeatures: "Property Features",
-    details: "Property Details",
-    locationInfoAndSpecs: "City Region etc..",
-    basicInfoDescription: "Enter basic property information",
-    descriptionPlaceholder: "Enter property description",
-    shortDescription: "Short description",
-    createSuccess: "Property created successfully",
-    createError: "Error creating property",
-    saveDraftSuccess: "Property saved as draft",
-    locationRequiredToast: "Please select a location on the map",
-    fixErrorsBeforeSubmit: "Please fix all errors before submitting",
-    missingFields: "Missing required fields",
-    systemInformation: "System Information",
-    loadError: "Failed to load form data",
-    saveProperty: "Save Property",
-    step: "Step",
-    of: "of",
-
-    // Form fields
     title: "Property Title",
     titlePlaceholder: "Enter property title",
-    descriptionAr: "Description (Arabic)",
-    descriptionEn: "Description (English)",
-    price: "Price (SAR)",
+    description: "Description",
+    descriptionPlaceholder: "Enter property description",
+    price: "Price",
     pricePlaceholder: "Enter price",
-    area: "Area (sqm)",
-    areaPlaceholder: "Enter area",
-
-    // Location
-    region: "Region",
-    city: "City",
-    neighborhood: "Neighborhood",
-    streetAr: "Street (Arabic)",
-    streetEn: "Street (English)",
-    selectRegion: "Select Region",
-    selectCity: "Select City",
-    selectNeighborhood: "Select Neighborhood",
-
-    // Property details
+    area: "Area",
+    areaPlaceholder: "Enter area in square meters",
     propertyType: "Property Type",
+    selectPropertyType: "Select Property Type",
     listingType: "Listing Type",
-    condition: "Property Condition",
+    selectListingType: "Select Listing Type",
+
+    // Location Info
+    locationInfo: "Location Information",
+    region: "Region",
+    selectRegion: "Select Region",
+    city: "City",
+    selectCity: "Select City",
+    neighborhood: "Neighborhood",
+    selectNeighborhood: "Select Neighborhood",
+    streetAr: "Street (Arabic)",
+    streetArPlaceholder: "Enter street name in Arabic",
+    streetEn: "Street (English)",
+    streetEnPlaceholder: "Enter street name in English",
+    selectLocation: "Select Location on Map",
+    selectOnMap: "Select on Map",
+    updateLocation: "Update Location",
+    locationSelected: "Location Selected",
+    coordinates: "Coordinates",
+
+    // Property Specs
+    propertySpecs: "Property Specifications",
+    condition: "Condition",
+    selectCondition: "Select Condition",
     finishType: "Finish Type",
+    selectFinishType: "Select Finish Type",
     roomsCount: "Number of Rooms",
     bathroomsCount: "Number of Bathrooms",
     livingroomsCount: "Number of Living Rooms",
     floorsCount: "Number of Floors",
-    buildingAge: "Building Age (years)",
-    streetEnPlaceholder: "Enter street name En",
-    streetArPlaceholder: "Enter street name in Arabic",
-    selectOnMap: "Select Location",
+    buildingAge: "Building Age (Years)",
 
-    // Map selectOnMap
-    selectLocation: "Select Location",
-    mapInstructions: "Click on the map to select location",
+    // Descriptions
+    detailedDescriptions: "Detailed Descriptions",
+    descriptionAr: "Description (Arabic)",
+    descriptionEn: "Description (English)",
 
-    // Buttons
-    saveDraft: "Save as Draft",
-    cancel: "Cancel",
+    // Actions
+    saveProperty: "Save Property",
+    addProperty: "Add New Property",
+    editProperty: "Edit Property",
+    deleteProperty: "Delete Property",
+    viewProperty: "View Property",
+
+    // Status
+    status: {
+      pending: "Pending",
+      approved: "Approved",
+      rejected: "Rejected",
+      all: "All Properties",
+    },
 
     // Validation
     validation: {
+      locationRequired: "Location must be selected on map",
       titleRequired: "Property title is required",
-      descriptionRequired: "Description is required",
+      descriptionRequired: "Property description is required",
       priceRequired: "Price is required",
       areaRequired: "Area is required",
       regionRequired: "Region is required",
@@ -195,34 +224,35 @@ const en = {
       conditionRequired: "Property condition is required",
       finishTypeRequired: "Finish type is required",
       streetRequired: "Street is required",
-      locationRequired: "Location is required",
     },
 
-    // Status
-    status: {
-      all: "All Properties",
-      pending: "Pending",
-      approved: "Approved",
-      rejected: "Rejected",
+    // Messages
+    messages: {
+      propertyAdded: "Property added successfully",
+      propertyUpdated: "Property updated successfully",
+      propertyDeleted: "Property deleted successfully",
+      deleteConfirmation: "Are you sure you want to delete this property?",
+      createSuccess: "Property created successfully",
+      createError: "Error creating property",
+      saveDraftSuccess: "Property saved as draft",
+      locationRequiredToast: "Please select a location on the map",
+      fixErrorsBeforeSubmit: "Please fix all errors before submitting",
+      missingFields: "Missing required fields",
     },
 
-    // Actions
-    actions: {
-      view: "View",
-      edit: "Edit",
-      delete: "Delete",
-    },
-
-    // Delete
-    delete: {
-      title: "Delete Property",
-      message: "Are you sure you want to delete this property?",
-      warning: "This action cannot be undone.",
-      confirm: "Delete Property",
-      deleting: "Deleting...",
-      success: "Property deleted successfully",
-      error: "Error deleting property",
-    },
+    // Additional properties from second set
+    propertyDetails: "Property Details",
+    propertyFeatures: "Property Features",
+    details: "Property Details",
+    locationInfoAndSpecs: "City Region etc..",
+    basicInfoDescription: "Enter basic property information",
+    shortDescription: "Short description",
+    systemInformation: "System Information",
+    loadError: "Failed to load form data",
+    step: "Step",
+    of: "of",
+    mapInstructions: "Click on the map to select location",
+    saveDraft: "Save as Draft",
 
     // List
     list: {
@@ -252,7 +282,24 @@ const en = {
       adminId: "Admin ID",
       statusId: "Status ID",
     },
+
+    // Delete
+    delete: {
+      title: "Delete Property",
+      message: "Are you sure you want to delete this property?",
+      warning: "This action cannot be undone.",
+      confirm: "Delete Property",
+      deleting: "Deleting...",
+      success: "Property deleted successfully",
+      error: "Error deleting property",
+    },
+
+    // Actions
+    actions: {
+      view: "View",
+      edit: "Edit",
+      delete: "Delete",
+    },
   },
 };
-
 export default en;

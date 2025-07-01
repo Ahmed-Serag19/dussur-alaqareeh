@@ -1,9 +1,45 @@
 const ar = {
+  // Common
+  common: {
+    loading: "جاري التحميل...",
+    save: "حفظ",
+    cancel: "إلغاء",
+    delete: "حذف",
+    edit: "تعديل",
+    view: "عرض",
+    search: "بحث",
+    filter: "تصفية",
+    clear: "مسح",
+    submit: "إرسال",
+    back: "رجوع",
+    next: "التالي",
+    previous: "السابق",
+    close: "إغلاق",
+    confirm: "تأكيد",
+    yes: "نعم",
+    no: "لا",
+    success: "نجح",
+    error: "خطأ",
+    warning: "تحذير",
+    info: "معلومات",
+    add: "إضافة",
+    export: "تصدير",
+    import: "استيراد",
+    refresh: "تحديث",
+    retry: "إعادة المحاولة",
+    or: "أو",
+  },
+
   // Navigation
   nav: {
+    dashboard: "لوحة التحكم",
+    properties: "العقارات",
+    addProperty: "إضافة عقار",
+    users: "المستخدمين",
+    settings: "الإعدادات",
+    logout: "تسجيل الخروج",
     notifications: "الإشعارات",
     profile: "الملف الشخصي",
-    logout: "تسجيل خروج",
     language: "اللغة",
   },
 
@@ -16,17 +52,25 @@ const ar = {
     home: "الرئيسية",
   },
 
-  // Auth
+  // Authentication
   auth: {
+    confirmPassword: "تأكيد كلمة المرور",
+    rememberMe: "تذكرني",
+    loginButton: "دخول",
+    registerButton: "إنشاء حساب",
+    alreadyHaveAccount: "لديك حساب بالفعل؟",
+    dontHaveAccount: "ليس لديك حساب؟",
+    loginHere: "سجل دخولك هنا",
+    registerHere: "أنشئ حسابك هنا",
     login: {
       title: "تسجيل دخول",
-      description: "أدخل بياناتك للوصول إلى حسابك",
       email: "البريد الإلكتروني",
-      emailPlaceholder: "أدخل البريد الإلكتروني",
       password: "كلمة المرور",
-      passwordPlaceholder: "أدخل كلمة المرور",
       forgotPassword: "نسيت كلمة المرور؟",
-      loginButton: "تسجيل دخول",
+      loginButton: "تسجيل الدخول",
+      description: "أدخل بياناتك للوصول إلى حسابك",
+      emailPlaceholder: "أدخل البريد الإلكتروني",
+      passwordPlaceholder: "أدخل كلمة المرور",
       loginButtonLoading: "جاري تسجيل الدخول...",
       noAccount: "ليس لديك حساب؟",
       createAccount: "إنشاء حساب جديد",
@@ -39,13 +83,10 @@ const ar = {
       description: "أدخل بياناتك لإنشاء حساب جديد",
       name: "الاسم",
       namePlaceholder: "أدخل الاسم الكامل",
-      email: "البريد الإلكتروني",
       emailPlaceholder: "أدخل البريد الإلكتروني",
       phone: "رقم الجوال",
       phonePlaceholder: "أدخل رقم الجوال",
-      password: "كلمة المرور",
       passwordPlaceholder: "أدخل كلمة المرور",
-      confirmPassword: "تأكيد كلمة المرور",
       confirmPasswordPlaceholder: "أعد إدخال كلمة المرور",
       registerButton: "إنشاء حساب",
       registerButtonLoading: "جاري إنشاء الحساب...",
@@ -73,8 +114,15 @@ const ar = {
 
   // Dashboard
   dashboard: {
+    welcome: "مرحباً بك",
+    totalProperties: "إجمالي العقارات",
+    pendingProperties: "العقارات في الانتظار",
+    approvedProperties: "العقارات المقبولة",
+    rejectedProperties: "العقارات المرفوضة",
+    recentProperties: "العقارات الحديثة",
+    quickActions: "الإجراءات السريعة",
     title: "لوحة التحكم",
-    welcome: "دسر العقارية",
+    // welcome: "دسر العقارية",
     addNewProperty: "تسجيل عقار جديد",
     viewProperties: "عرض العقارات",
     stats: {
@@ -89,102 +137,78 @@ const ar = {
     },
   },
 
-  // Common
-  common: {
-    loading: "جاري التحميل...",
-    error: "حدث خطأ",
-    success: "تم بنجاح",
-    cancel: "إلغاء",
-    save: "حفظ",
-    delete: "حذف",
-    edit: "تعديل",
-    view: "عرض",
-    add: "إضافة",
-    search: "بحث",
-    filter: "تصفية",
-    export: "تصدير",
-    import: "استيراد",
-    refresh: "تحديث",
-    retry: "إعادة المحاولة",
-    or: "أو",
-    previous: "السابق",
-    next: "التالي",
-    close: "إغلاق",
-    confirm: "تأكيد",
-    yes: "نعم",
-    no: "لا",
-  },
-
   // Properties
   properties: {
-    addProperty: "إضافة عقار جديد",
-    propertyDetails: "تفاصيل العقار",
+    // Basic Info
     basicInfo: "المعلومات الأساسية",
-    locationInfo: "معلومات الموقع",
-    propertySpecs: "مواصفات العقار",
-    propertyFeatures: "مميزات العقار",
-    details: "تفاصيل العقار",
-    locationInfoAndSpecs: "المنطقة مدينة حي الخ..",
-    basicInfoDescription: "أدخل المعلومات الأساسية للعقار",
-    descriptionPlaceholder: "أدخل وصفًا للعقار",
-    shortDescription: "نبذة سريعة",
-    createSuccess: "تم إنشاء العقار بنجاح",
-    createError: "حدث خطأ أثناء إنشاء العقار",
-    saveDraftSuccess: "تم حفظ العقار كمسودة",
-    locationRequiredToast: "يرجى تحديد الموقع على الخريطة",
-    fixErrorsBeforeSubmit: "يرجى تصحيح جميع الأخطاء قبل الإرسال",
-    missingFields: "بعض الحقول المطلوبة مفقودة",
-    systemInformation: "تفاصيل النظام",
-    loadError: "فشل في تحميل بيانات النموذج",
-    step: "الخطوة",
-    of: "من",
-    streetArPlaceholder: "ادخل اسم الشارع بالعربية",
-    streetEnPlaceholder: " ادخل اسم الشارع بالانجليزية",
-    selectOnMap: "حدد المكان",
-    // Form fields
-    title: "اسم العقار",
-    titlePlaceholder: "أدخل اسم للعقار",
-    descriptionAr: "الوصف بالعربية",
-    descriptionEn: "الوصف بالإنجليزية",
-    price: "السعر (ريال)",
+    title: "عنوان العقار",
+    titlePlaceholder: "أدخل عنوان العقار",
+    description: "الوصف",
+    descriptionPlaceholder: "أدخل وصف العقار",
+    price: "السعر",
     pricePlaceholder: "أدخل السعر",
-    area: "المساحة (متر مربع)",
-    areaPlaceholder: "أدخل المساحة",
-
-    // Location
-    region: "المنطقة",
-    city: "المدينة",
-    neighborhood: "الحي",
-    streetAr: "الشارع (عربي)",
-    streetEn: "الشارع (إنجليزي)",
-    selectRegion: "اختر المنطقة",
-    selectCity: "اختر المدينة",
-    selectNeighborhood: "اختر الحي",
-
-    // Property details
+    area: "المساحة",
+    areaPlaceholder: "أدخل المساحة بالمتر المربع",
     propertyType: "نوع العقار",
+    selectPropertyType: "اختر نوع العقار",
     listingType: "نوع الإعلان",
+    selectListingType: "اختر نوع الإعلان",
+
+    // Location Info
+    locationInfo: "معلومات الموقع",
+    region: "المنطقة",
+    selectRegion: "اختر المنطقة",
+    city: "المدينة",
+    selectCity: "اختر المدينة",
+    neighborhood: "الحي",
+    selectNeighborhood: "اختر الحي",
+    streetAr: "الشارع (عربي)",
+    streetArPlaceholder: "أدخل اسم الشارع بالعربية",
+    streetEn: "الشارع (إنجليزي)",
+    streetEnPlaceholder: "أدخل اسم الشارع بالإنجليزية",
+    selectLocation: "اختيار الموقع على الخريطة",
+    selectOnMap: "اختر على الخريطة",
+    updateLocation: "تحديث الموقع",
+    locationSelected: "تم اختيار الموقع",
+    coordinates: "الإحداثيات",
+
+    // Property Specs
+    propertySpecs: "مواصفات العقار",
     condition: "حالة العقار",
+    selectCondition: "اختر حالة العقار",
     finishType: "نوع التشطيب",
+    selectFinishType: "اختر نوع التشطيب",
     roomsCount: "عدد الغرف",
     bathroomsCount: "عدد دورات المياه",
     livingroomsCount: "عدد غرف المعيشة",
-    floorsCount: "عدد الأدوار",
-    buildingAge: "عمر البناء (سنوات)",
+    floorsCount: "عدد الطوابق",
+    buildingAge: "عمر البناء (بالسنوات)",
 
-    // Map
-    selectLocation: "اختيار الموقع",
-    mapInstructions: "انقر على الخريطة لتحديد الموقع",
+    // Descriptions
+    detailedDescriptions: "الوصف التفصيلي",
+    descriptionAr: "الوصف (عربي)",
+    descriptionEn: "الوصف (إنجليزي)",
 
-    // Buttons
+    // Actions
     saveProperty: "حفظ العقار",
-    saveDraft: "حفظ كمسودة",
-    cancel: "إلغاء",
+    addProperty: "إضافة عقار جديد",
+    editProperty: "تعديل العقار",
+    deleteProperty: "حذف العقار",
+    viewProperty: "عرض العقار",
+
+    // Status
+    status: {
+      pending: "في الانتظار",
+      approved: "مقبول",
+      rejected: "مرفوض",
+      all: "جميع العقارات",
+    },
 
     // Validation
     validation: {
+      locationRequired: "يجب اختيار الموقع على الخريطة",
       titleRequired: "عنوان العقار مطلوب",
-      descriptionRequired: "الوصف مطلوب",
+      descriptionRequired: "وصف العقار مطلوب",
       priceRequired: "السعر مطلوب",
       areaRequired: "المساحة مطلوبة",
       regionRequired: "المنطقة مطلوبة",
@@ -195,34 +219,35 @@ const ar = {
       conditionRequired: "حالة العقار مطلوبة",
       finishTypeRequired: "نوع التشطيب مطلوب",
       streetRequired: "الشارع مطلوب",
-      locationRequired: "الموقع مطلوب",
     },
 
-    // Status
-    status: {
-      all: "جميع العقارات",
-      pending: "قيد المراجعة",
-      approved: "مقبولة",
-      rejected: "مرفوضة",
+    // Messages
+    messages: {
+      propertyAdded: "تم إضافة العقار بنجاح",
+      propertyUpdated: "تم تحديث العقار بنجاح",
+      propertyDeleted: "تم حذف العقار بنجاح",
+      deleteConfirmation: "هل أنت متأكد من حذف هذا العقار؟",
+      createSuccess: "تم إنشاء العقار بنجاح",
+      createError: "حدث خطأ أثناء إنشاء العقار",
+      saveDraftSuccess: "تم حفظ العقار كمسودة",
+      locationRequiredToast: "يرجى تحديد الموقع على الخريطة",
+      fixErrorsBeforeSubmit: "يرجى تصحيح جميع الأخطاء قبل الإرسال",
+      missingFields: "بعض الحقول المطلوبة مفقودة",
     },
 
-    // Actions
-    actions: {
-      view: "عرض",
-      edit: "تعديل",
-      delete: "حذف",
-    },
-
-    // Delete
-    delete: {
-      title: "حذف العقار",
-      message: "هل أنت متأكد من حذف هذا العقار؟",
-      warning: "هذا الإجراء لا يمكن التراجع عنه.",
-      confirm: "حذف العقار",
-      deleting: "جاري الحذف...",
-      success: "تم حذف العقار بنجاح",
-      error: "حدث خطأ أثناء حذف العقار",
-    },
+    // Additional properties from second set
+    propertyDetails: "تفاصيل العقار",
+    propertyFeatures: "مميزات العقار",
+    details: "تفاصيل العقار",
+    locationInfoAndSpecs: "المنطقة مدينة حي الخ..",
+    basicInfoDescription: "أدخل المعلومات الأساسية للعقار",
+    shortDescription: "نبذة سريعة",
+    systemInformation: "تفاصيل النظام",
+    loadError: "فشل في تحميل بيانات النموذج",
+    step: "الخطوة",
+    of: "من",
+    mapInstructions: "انقر على الخريطة لتحديد الموقع",
+    saveDraft: "حفظ كمسودة",
 
     // List
     list: {
@@ -252,7 +277,24 @@ const ar = {
       adminId: "رقم المدير",
       statusId: "رقم الحالة",
     },
+
+    // Delete
+    delete: {
+      title: "حذف العقار",
+      message: "هل أنت متأكد من حذف هذا العقار؟",
+      warning: "هذا الإجراء لا يمكن التراجع عنه.",
+      confirm: "حذف العقار",
+      deleting: "جاري الحذف...",
+      success: "تم حذف العقار بنجاح",
+      error: "حدث خطأ أثناء حذف العقار",
+    },
+
+    // Actions
+    actions: {
+      view: "عرض",
+      edit: "تعديل",
+      delete: "حذف",
+    },
   },
 };
-
 export default ar;

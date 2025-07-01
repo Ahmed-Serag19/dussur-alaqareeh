@@ -1,8 +1,7 @@
-"use client";
-
-import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import { getAllLookupData } from "@/features/properties/api/lookup.api";
 import type {
+  LookupData,
   LookupItem,
   CityItem,
   NeighborhoodItem,
@@ -11,19 +10,27 @@ import useLanguage from "@/hooks/useLanguage";
 
 export const useLookupData = () => {
   const { isRTL } = useLanguage();
+  const [lookupData, setLookupData] = useState<LookupData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const {
-    data: lookupData,
-    isLoading,
-    error,
-    refetch,
-  } = useQuery({
-    queryKey: ["lookup-data"],
-    queryFn: getAllLookupData,
-    staleTime: 1000 * 60 * 30, // 30 minutes - lookup data doesn't change often
-    refetchOnWindowFocus: false,
-    retry: 3,
-  });
+  useEffect(() => {
+    const fetchLookupData = async () => {
+      try {
+        setIsLoading(true);
+        const data = await getAllLookupData();
+        setLookupData(data);
+        setError(null);
+      } catch (err) {
+        console.error("Failed to fetch lookup data:", err);
+        setError("Failed to load form data");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchLookupData();
+  }, []);
 
   // Helper function to get name by ID from any lookup array
   const getLookupName = (
@@ -75,13 +82,13 @@ export const useLookupData = () => {
 
   // Get cities by region
   const getCitiesByRegion = (regionId: number): CityItem[] => {
-    if (!lookupData?.cities) return [];
+    if (!lookupData?.cities || !regionId) return [];
     return lookupData.cities.filter((city) => city.regionId === regionId);
   };
 
   // Get neighborhoods by city
   const getNeighborhoodsByCity = (cityId: number): NeighborhoodItem[] => {
-    if (!lookupData?.neighborhoods) return [];
+    if (!lookupData?.neighborhoods || !cityId) return [];
     return lookupData.neighborhoods.filter(
       (neighborhood) => neighborhood.cityId === cityId
     );
@@ -104,8 +111,22 @@ export const useLookupData = () => {
     }
   };
 
+  const refetch = async () => {
+    try {
+      setIsLoading(true);
+      const data = await getAllLookupData();
+      setLookupData(data);
+      setError(null);
+    } catch (err) {
+      console.error("Failed to refetch lookup data:", err);
+      setError("Failed to reload form data");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return {
-    // Raw data for form components
+    // Raw data for form components (backward compatibility)
     regions: lookupData?.regions || [],
     cities: lookupData?.cities || [],
     neighborhoods: lookupData?.neighborhoods || [],

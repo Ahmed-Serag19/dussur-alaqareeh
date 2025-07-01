@@ -35,7 +35,6 @@ export const PropertySpecsSection = ({
 
   return (
     <div className="space-y-6">
-      {/* Property Specifications */}
       <Card>
         <CardHeader>
           <CardTitle className={isRTL ? "text-right" : "text-left"}>
@@ -43,81 +42,7 @@ export const PropertySpecsSection = ({
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="grid gap-6 lg:grid-cols-3">
-            <div className="space-y-2">
-              <Label
-                htmlFor="bedrooms"
-                className={`block text-sm font-medium ${
-                  isRTL ? "text-right" : "text-left"
-                }`}
-              >
-                {t("properties.bedrooms")}
-              </Label>
-              <Input
-                id="bedrooms"
-                type="number"
-                min="0"
-                placeholder={t("properties.bedroomsPlaceholder")}
-                className={isRTL ? "text-right" : "text-left"}
-                {...register("bedrooms", { valueAsNumber: true })}
-              />
-              {errors.roomsCount && (
-                <p className="text-sm text-red-600 text-right">
-                  {errors.roomsCount.message}
-                </p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label
-                htmlFor="bathrooms"
-                className={`block text-sm font-medium ${
-                  isRTL ? "text-right" : "text-left"
-                }`}
-              >
-                {t("properties.bathrooms")}
-              </Label>
-              <Input
-                id="bathrooms"
-                type="number"
-                min="0"
-                placeholder={t("properties.bathroomsPlaceholder")}
-                className={isRTL ? "text-right" : "text-left"}
-                {...register("bathrooms", { valueAsNumber: true })}
-              />
-              {errors.bathroomsCount && (
-                <p className="text-sm text-red-600 text-right">
-                  {errors.bathroomsCount.message}
-                </p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label
-                htmlFor="floors"
-                className={`block text-sm font-medium ${
-                  isRTL ? "text-right" : "text-left"
-                }`}
-              >
-                {t("properties.floors")}
-              </Label>
-              <Input
-                id="floors"
-                type="number"
-                min="0"
-                placeholder={t("properties.floorsPlaceholder")}
-                className={isRTL ? "text-right" : "text-left"}
-                {...register("floors", { valueAsNumber: true })}
-              />
-              {errors.floorsCount && (
-                <p className="text-sm text-red-600 text-right">
-                  {errors.floorsCount.message}
-                </p>
-              )}
-            </div>
-          </div>
-
-          <div className="grid gap-6 lg:grid-cols-2">
+          <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2">
             <div className="space-y-2">
               <Label
                 className={`block text-sm font-medium ${
@@ -142,7 +67,7 @@ export const PropertySpecsSection = ({
                       />
                     </SelectTrigger>
                     <SelectContent>
-                      {conditions.map((condition) => (
+                      {conditions?.map((condition) => (
                         <SelectItem
                           key={condition.id}
                           value={condition.id.toString()}
@@ -185,12 +110,9 @@ export const PropertySpecsSection = ({
                       />
                     </SelectTrigger>
                     <SelectContent>
-                      {finishTypes.map((finishType) => (
-                        <SelectItem
-                          key={finishType.id}
-                          value={finishType.id.toString()}
-                        >
-                          {isRTL ? finishType.nameAr : finishType.nameEn}
+                      {finishTypes?.map((type) => (
+                        <SelectItem key={type.id} value={type.id.toString()}>
+                          {isRTL ? type.nameAr : type.nameEn}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -203,6 +125,98 @@ export const PropertySpecsSection = ({
                 </p>
               )}
             </div>
+          </div>
+
+          <div className="grid gap-4 sm:gap-6 grid-cols-2 lg:grid-cols-4">
+            <div className="space-y-2">
+              <Label
+                htmlFor="roomsCount"
+                className={`block text-sm font-medium ${
+                  isRTL ? "text-right" : "text-left"
+                }`}
+              >
+                {t("properties.roomsCount")}
+              </Label>
+              <Input
+                id="roomsCount"
+                type="number"
+                min="0"
+                className={isRTL ? "text-right" : "text-left"}
+                {...register("roomsCount", { valueAsNumber: true })}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label
+                htmlFor="bathroomsCount"
+                className={`block text-sm font-medium ${
+                  isRTL ? "text-right" : "text-left"
+                }`}
+              >
+                {t("properties.bathroomsCount")}
+              </Label>
+              <Input
+                id="bathroomsCount"
+                type="number"
+                min="0"
+                className={isRTL ? "text-right" : "text-left"}
+                {...register("bathroomsCount", { valueAsNumber: true })}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label
+                htmlFor="livingroomsCount"
+                className={`block text-sm font-medium ${
+                  isRTL ? "text-right" : "text-left"
+                }`}
+              >
+                {t("properties.livingroomsCount")}
+              </Label>
+              <Input
+                id="livingroomsCount"
+                type="number"
+                min="0"
+                className={isRTL ? "text-right" : "text-left"}
+                {...register("livingroomsCount", { valueAsNumber: true })}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label
+                htmlFor="floorsCount"
+                className={`block text-sm font-medium ${
+                  isRTL ? "text-right" : "text-left"
+                }`}
+              >
+                {t("properties.floorsCount")}
+              </Label>
+              <Input
+                id="floorsCount"
+                type="number"
+                min="0"
+                className={isRTL ? "text-right" : "text-left"}
+                {...register("floorsCount", { valueAsNumber: true })}
+              />
+            </div>
+          </div>
+
+          <div className="max-w-xs space-y-2">
+            <Label
+              htmlFor="buildingAge"
+              className={`block text-sm font-medium ${
+                isRTL ? "text-right" : "text-left"
+              }`}
+            >
+              {t("properties.buildingAge")}
+            </Label>
+            <Input
+              id="buildingAge"
+              type="number"
+              min="0"
+              className={isRTL ? "text-right" : "text-left"}
+              {...register("buildingAge", { valueAsNumber: true })}
+            />
           </div>
         </CardContent>
       </Card>
@@ -227,8 +241,7 @@ export const PropertySpecsSection = ({
             <Textarea
               id="descriptionAr"
               rows={4}
-              placeholder={t("properties.descriptionArPlaceholder")}
-              className="text-right"
+              className={`${isRTL ? "text-right" : "text-left"}`}
               {...register("descriptionAr")}
             />
             {errors.descriptionAr && (
@@ -250,8 +263,7 @@ export const PropertySpecsSection = ({
             <Textarea
               id="descriptionEn"
               rows={4}
-              placeholder={t("properties.descriptionEnPlaceholder")}
-              className="text-left"
+              className={`${isRTL ? "text-right" : "text-left"}`}
               {...register("descriptionEn")}
             />
             {errors.descriptionEn && (

@@ -44,7 +44,7 @@ export const usePropertyForm = () => {
       longitude: 0,
       latitude: 0,
     },
-    mode: "onChange", // Enable real-time validation
+    mode: "onChange",
   });
 
   const { watch, setValue } = form;
