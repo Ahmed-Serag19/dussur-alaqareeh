@@ -153,7 +153,7 @@ const ar = {
     selectPropertyType: "اختر نوع العقار",
     listingType: "نوع الإعلان",
     selectListingType: "اختر نوع الإعلان",
-
+    createSuccess: "تم إنشاء العقار بنجاح",
     // Location Info
     locationInfo: "معلومات الموقع",
     region: "المنطقة",

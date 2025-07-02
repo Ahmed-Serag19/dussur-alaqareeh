@@ -5,7 +5,7 @@ import DescriptionInput from "./DescriptionInput";
 import PriceAndArea from "./PriceAndArea";
 import TypeAndListingSelects from "./TypeAndListingSelects";
 import type { Control, FieldErrors } from "react-hook-form";
-import type { LookupItem } from "@/features/properties/api/lookup.api";
+import type { LookupItem } from "../types/lookup.types";
 import type { CreatePropertyFormData } from "@/features/properties/types/property.types";
 
 interface Props {

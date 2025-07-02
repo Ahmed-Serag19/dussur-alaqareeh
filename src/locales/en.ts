@@ -158,6 +158,7 @@ const en = {
     selectPropertyType: "Select Property Type",
     listingType: "Listing Type",
     selectListingType: "Select Listing Type",
+    createSuccess: "Property created successfully",
 
     // Location Info
     locationInfo: "Location Information",
