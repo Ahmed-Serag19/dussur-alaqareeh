@@ -70,7 +70,8 @@ export const usePropertySubmission = () => {
       floorsCount: data.floorsCount,
       buildingAge: data.buildingAge,
       statusId: 1,
-      createdBy: 1001, // ALWAYS 1001
+      // createdBy: 1001,
+      featureIds: data.featureIds ?? [],
     };
 
     console.log("Final property data being sent:", propertyData);

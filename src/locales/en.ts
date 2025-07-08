@@ -209,6 +209,10 @@ const en = {
       rejected: "Rejected",
       all: "All Properties",
     },
+    features: {
+      title: "Property Features",
+      subtitle: "Select any features that apply to this property",
+    },
 
     // Validation
     validation: {

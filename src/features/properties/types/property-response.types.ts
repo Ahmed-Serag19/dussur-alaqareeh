@@ -34,6 +34,12 @@ export interface Property {
   statusId: number;
   createdAt: string;
   updatedAt: string;
+  featureIds?: number[];
+  features?: Array<{
+    id: number;
+    nameAr: string;
+    nameEn: string;
+  }>;
 }
 
 export type PropertyStatus = "PENDING" | "APPROVED" | "REJECTED";

@@ -40,6 +40,7 @@ export const createPropertySchema = (t: any) =>
     buildingAge: z.number().min(0),
     longitude: z.number(),
     latitude: z.number(),
+    featureIds: z.array(z.number()).optional(),
   });
 
 export type CreatePropertyFormData = z.infer<
@@ -70,4 +71,5 @@ export interface CreatePropertyDto {
   floorsCount: number;
   buildingAge: number;
   statusId: number;
+  featureIds: number[];
 }

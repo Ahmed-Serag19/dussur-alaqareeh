@@ -28,6 +28,7 @@ export const createProperty = async (data: CreatePropertyDto) => {
     floorsCount: data.floorsCount,
     buildingAge: data.buildingAge,
     statusId: data.statusId,
+    featureIds: data.featureIds,
   };
 
   try {

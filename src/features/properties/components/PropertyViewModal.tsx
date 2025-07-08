@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Dialog,
   DialogContent,
@@ -19,6 +17,7 @@ import { PropertyGeneralInfo } from "./property-modal/PropertyGeneralInfo";
 import { PropertyLocationDetails } from "./property-modal/PropertyLocationDetails";
 import { PropertySpecifications } from "./property-modal/PropertySpecifications";
 import { PropertySystemInfo } from "./property-modal/PropertySystemInfo";
+import { PropertyFeaturesView } from "./property-modal/PropertyFeaturesView";
 
 interface PropertyViewModalProps {
   property: Property | null;
@@ -94,6 +93,10 @@ export const PropertyViewModal = ({
               getPropertyConditionName={getPropertyConditionName}
               getFinishingTypeName={getFinishingTypeName}
             />
+
+            <Separator />
+
+            <PropertyFeaturesView property={property} isRTL={isRTL} />
 
             <Separator />
 

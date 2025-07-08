@@ -127,7 +127,7 @@ const ar = {
     viewProperties: "عرض العقارات",
     stats: {
       total: "إجمالي العقارات",
-      available: "العقارات المتاحة",
+      available: "العقارات المقبولة",
     },
     actions: {
       add: "تسجيل عقار جديد",
@@ -141,8 +141,8 @@ const ar = {
   properties: {
     // Basic Info
     basicInfo: "المعلومات الأساسية",
-    title: "عنوان العقار",
-    titlePlaceholder: "أدخل عنوان العقار",
+    title: "اسم العقار",
+    titlePlaceholder: "أدخل اسم العقار",
     description: "الوصف",
     descriptionPlaceholder: "أدخل وصف العقار",
     price: "السعر",
@@ -202,6 +202,10 @@ const ar = {
       approved: "مقبول",
       rejected: "مرفوض",
       all: "جميع العقارات",
+    },
+    features: {
+      title: "مزايا العقار",
+      subtitle: "اختر أي مزايا تنطبق على هذا العقار",
     },
 
     // Validation

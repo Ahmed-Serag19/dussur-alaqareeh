@@ -2,20 +2,22 @@ import { Plus, Eye, TrendingUp, Building } from "lucide-react";
 import ActionCard from "@/components/ui/action-card";
 import { Card, CardHeader } from "@/components/ui/card";
 import useLanguage from "@/hooks/useLanguage";
+import { usePropertiesData } from "@/features/properties/hooks/usePropertiesData";
 
 const HomePage = () => {
   const { isRTL, t } = useLanguage();
-
+  const { getCounts } = usePropertiesData();
+  const { all, approved } = getCounts();
   const stats = [
     {
       label: t("dashboard.stats.total"),
-      value: "1,247",
+      value: all,
       icon: Building,
       color: "text-blue-600",
     },
     {
       label: t("dashboard.stats.available"),
-      value: "892",
+      value: approved,
       icon: TrendingUp,
       color: "text-green-600",
     },

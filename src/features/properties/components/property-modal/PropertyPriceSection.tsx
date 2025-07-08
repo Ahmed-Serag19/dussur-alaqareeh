@@ -1,14 +1,15 @@
-"use client"
-
 interface PropertyPriceSectionProps {
-  price: number
-  isRTL: boolean
+  price: number;
+  isRTL: boolean;
 }
 
-export const PropertyPriceSection = ({ price, isRTL }: PropertyPriceSectionProps) => {
+export const PropertyPriceSection = ({
+  price,
+  isRTL,
+}: PropertyPriceSectionProps) => {
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat(isRTL ? "ar-SA" : "en-US").format(price)
-  }
+    return new Intl.NumberFormat(isRTL ? "ar-SA" : "en-US").format(price);
+  };
 
   return (
     <div className="text-center py-4 bg-gradient-to-r from-blue-50 to-green-50 rounded-lg">
@@ -16,5 +17,5 @@ export const PropertyPriceSection = ({ price, isRTL }: PropertyPriceSectionProps
         {formatPrice(price)} {isRTL ? "ريال سعودي" : "SAR"}
       </div>
     </div>
-  )
-}
+  );
+};

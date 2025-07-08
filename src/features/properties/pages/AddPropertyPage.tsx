@@ -11,6 +11,7 @@ import { usePropertySubmission } from "@/features/properties/hooks/usePropertySu
 import type { CreatePropertyFormData } from "@/features/properties/types/property.types";
 import useLanguage from "@/hooks/useLanguage";
 import { toast } from "react-hot-toast";
+import PropertyFeaturesSection from "../components/PropertyFeaturesStep";
 
 const AddPropertyPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -32,6 +33,8 @@ const AddPropertyPage = () => {
     formState: { errors },
     trigger,
     getValues,
+    watch,
+    setValue,
   } = form;
 
   const onSubmit = async (data: CreatePropertyFormData) => {
@@ -89,7 +92,7 @@ const AddPropertyPage = () => {
     };
 
     const isValid = await trigger(stepFields[currentStep] || []);
-    if (isValid && currentStep < 3) {
+    if (isValid && currentStep < steps.length) {
       setCurrentStep(currentStep + 1);
     } else if (!isValid) {
       toast.error(t("properties.fixErrorsBeforeSubmit"));
@@ -122,6 +125,10 @@ const AddPropertyPage = () => {
     {
       title: t("properties.propertySpecs") + " & " + t("properties.details"),
       description: t("properties.propertySpecs"),
+    },
+    {
+      title: t("properties.features.title"),
+      description: t("properties.features.subtitle"),
     },
   ];
 
@@ -215,6 +222,9 @@ const AddPropertyPage = () => {
             conditions={lookupData.propertyConditions}
             finishTypes={lookupData.finishingTypes}
           />
+        )}
+        {currentStep === 4 && (
+          <PropertyFeaturesSection watch={watch} setValue={setValue} />
         )}
 
         {/* Navigation Buttons */}
