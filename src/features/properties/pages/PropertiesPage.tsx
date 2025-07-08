@@ -6,7 +6,7 @@ import { PropertyList } from "@/features/properties/components/PropertyList";
 import { PropertyStatusTabs } from "@/features/properties/components/PropertyStatusTabs";
 import { PropertyViewModal } from "@/features/properties/components/PropertyViewModal";
 import { usePropertiesData } from "@/features/properties/hooks/usePropertiesData";
-import { useLookupData } from "@/features/properties/hooks/useLookupData";
+
 import type {
   Property,
   PropertyStatus,
@@ -14,6 +14,7 @@ import type {
 import useLanguage from "@/hooks/useLanguage";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import { useLookupContext } from "../context/lookup-context";
 
 export const PropertiesPage = () => {
   const { isRTL } = useLanguage();
@@ -38,7 +39,7 @@ export const PropertiesPage = () => {
   } = usePropertiesData();
 
   // Preload lookup data
-  const { isLoading: isLoadingLookup } = useLookupData();
+  const { isLoading: isLoadingLookup } = useLookupContext();
 
   const handleViewProperty = (property: Property) => {
     setViewModal({

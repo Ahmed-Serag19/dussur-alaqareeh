@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -24,9 +26,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import type { Property } from "@/features/properties/types/property-response.types";
 import { PropertyStatusBadge } from "./PropertyStatusBadge";
-import { useLookupData } from "@/features/properties/hooks/useLookupData";
 import useLanguage from "@/hooks/useLanguage";
 import { useTranslation } from "react-i18next";
+import { useLookupContext } from "../context/lookup-context";
 
 interface PropertyCardProps {
   property: Property;
@@ -43,8 +45,7 @@ export const PropertyCard = ({
 }: PropertyCardProps) => {
   const { isRTL } = useLanguage();
   const { t } = useTranslation();
-  const { getFullLocationString, getPropertyTypeName } = useLookupData();
-
+  const { getFullLocationString, getPropertyTypeName } = useLookupContext();
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat(isRTL ? "ar-SA" : "en-US").format(price);
   };

@@ -24,7 +24,11 @@ export const PropertyFeaturesView = ({ property, isRTL }: Props) => {
         {t("properties.features.title")}
       </h3>
 
-      <div className="flex flex-wrap gap-2">
+      <div
+        className={`flex flex-wrap gap-2  ${
+          isRTL ? "justify-end" : "justify-start"
+        }`}
+      >
         {features.map((feature) => (
           <span
             key={feature.id}

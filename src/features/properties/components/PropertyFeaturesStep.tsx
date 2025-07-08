@@ -1,8 +1,9 @@
 import type { UseFormWatch, UseFormSetValue } from "react-hook-form";
-import { useLookupData } from "@/features/properties/hooks/useLookupData";
+
 import useLanguage from "@/hooks/useLanguage";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { CreatePropertyFormData } from "../types/property.types";
+import { useLookupContext } from "../context/lookup-context";
 
 interface Props {
   watch: UseFormWatch<CreatePropertyFormData>;
@@ -11,7 +12,7 @@ interface Props {
 
 const PropertyFeaturesSection = ({ watch, setValue }: Props) => {
   const { t, currentLanguage } = useLanguage();
-  const { propertyFeatures } = useLookupData();
+  const { propertyFeatures } = useLookupContext();
   const selectedFeatures: number[] = watch("featureIds") || [];
 
   const toggleFeature = (id: number) => {

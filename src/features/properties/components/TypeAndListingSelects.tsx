@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Controller } from "react-hook-form";
 import type { Control, FieldErrors } from "react-hook-form";
 import useLanguage from "@/hooks/useLanguage";
-import type { LookupItem } from "@/features/properties/api/lookup.api";
+import type { LookupItem } from "../types/lookup.types";
 
 interface TypeAndListingSelectsProps {
   control: Control<any>;

@@ -6,12 +6,13 @@ import BasicInfoSection from "@/features/properties/components/BasicInfoSection"
 import { LocationSection } from "@/features/properties/components/LocationSection";
 import { PropertySpecsSection } from "@/features/properties/components/PropertySpecsSection";
 import { usePropertyForm } from "@/features/properties/hooks/usePropertyForm";
-import { useLookupData } from "@/features/properties/hooks/useLookupData";
+
 import { usePropertySubmission } from "@/features/properties/hooks/usePropertySubmission";
 import type { CreatePropertyFormData } from "@/features/properties/types/property.types";
 import useLanguage from "@/hooks/useLanguage";
 import { toast } from "react-hot-toast";
 import PropertyFeaturesSection from "../components/PropertyFeaturesStep";
+import { useLookupContext } from "../context/lookup-context";
 
 const AddPropertyPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -23,7 +24,7 @@ const AddPropertyPage = () => {
     setSelectedLocation,
   } = usePropertyForm();
   const { submitProperty, isLoading } = usePropertySubmission();
-  const lookupData = useLookupData();
+  const lookupData = useLookupContext();
   const { isRTL, t } = useLanguage();
 
   const {

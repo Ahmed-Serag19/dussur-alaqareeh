@@ -7,8 +7,8 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import type { Property } from "@/features/properties/types/property-response.types";
-import { useLookupData } from "@/features/properties/hooks/useLookupData";
 import useLanguage from "@/hooks/useLanguage";
+import { useLookupContext } from "../context/lookup-context";
 
 // Import the smaller components
 import { PropertyHeader } from "./property-modal/PropertyHeader";
@@ -42,7 +42,7 @@ export const PropertyViewModal = ({
     getPropertyConditionName,
     getFinishingTypeName,
     getFullLocationString,
-  } = useLookupData();
+  } = useLookupContext();
 
   if (!property) return null;
 

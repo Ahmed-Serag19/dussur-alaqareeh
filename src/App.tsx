@@ -6,6 +6,7 @@ import { router } from "@/routes";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { SidebarProvider } from "./context/SidebarContext";
+import { LookupProvider } from "./features/properties/context/lookup-context";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,20 +28,22 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SidebarProvider>
-        <RouterProvider router={router} />
-        <Toaster
-          position="top-center"
-          toastOptions={{
-            duration: 4000,
-            style: {
-              background: "#363636",
-              color: "#fff",
-            },
-          }}
-        />
-      </SidebarProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
+      <LookupProvider>
+        <SidebarProvider>
+          <RouterProvider router={router} />
+          <Toaster
+            position="top-center"
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: "#363636",
+                color: "#fff",
+              },
+            }}
+          />
+        </SidebarProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </LookupProvider>
     </QueryClientProvider>
   );
 }
