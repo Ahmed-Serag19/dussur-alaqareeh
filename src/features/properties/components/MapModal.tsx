@@ -1,214 +1,204 @@
-import type React from "react";
-import { useState, useEffect } from "react";
+"use client";
+import { useEffect, useState } from "react";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  useMapEvents,
+  useMap,
+} from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { MapPin, Locate, X } from "lucide-react";
-import useLanguage from "@/hooks/useLanguage";
+import { MapPin, X, Locate, Loader2, AlertCircle } from "lucide-react";
+import { useIpLocationQuery } from "@/features/properties/hooks/useIpLocationQuery";
+
+// Leaflet fix
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl:
+    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+});
 
 interface MapModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onLocationSelect: (location: { lat: number; lng: number }) => void;
+  onLocationSelect: (loc: { lat: number; lng: number }) => void;
   selectedLocation: { lat: number; lng: number } | null;
   cityName?: string;
 }
 
-const MapModal = ({
+const LocationSelector = ({
+  onSelect,
+}: {
+  onSelect: (loc: { lat: number; lng: number }) => void;
+}) => {
+  useMapEvents({
+    click(e) {
+      onSelect(e.latlng);
+    },
+  });
+  return null;
+};
+
+const MapController = ({
+  center,
+  shouldFlyTo,
+}: {
+  center: { lat: number; lng: number };
+  shouldFlyTo: boolean;
+}) => {
+  const map = useMap();
+  useEffect(() => {
+    if (shouldFlyTo) {
+      map.flyTo([center.lat, center.lng], 15);
+    }
+  }, [center, shouldFlyTo]);
+  return null;
+};
+
+export default function MapModal({
   isOpen,
   onClose,
   onLocationSelect,
   selectedLocation,
   cityName,
-}: MapModalProps) => {
-  const { t } = useLanguage();
-  const [currentLocation, setCurrentLocation] = useState<{
-    lat: number;
-    lng: number;
-  } | null>(null);
-  const [tempLocation, setTempLocation] = useState<{
-    lat: number;
-    lng: number;
-  } | null>(selectedLocation);
+}: MapModalProps) {
+  const defaultCenter = { lat: 20, lng: 0 };
+  const [mapCenter, setMapCenter] = useState(selectedLocation || defaultCenter);
+  const [tempLocation, setTempLocation] = useState(selectedLocation);
+  const [gettingGps, setGettingGps] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [shouldFly, setShouldFly] = useState(false);
+
+  const { data: ipLocation } = useIpLocationQuery();
+
+  const tryGps = () => {
+    setGettingGps(true);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const coords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        setMapCenter(coords);
+        setTempLocation(coords);
+        setShouldFly(true);
+        setError(null);
+        setGettingGps(false);
+      },
+      () => {
+        if (ipLocation) {
+          const coords = { lat: ipLocation.lat, lng: ipLocation.lng };
+          setMapCenter(coords);
+          setTempLocation(coords);
+          setShouldFly(true);
+          setError("Using IP-based location");
+        } else {
+          setError("Could not get location.");
+        }
+        setGettingGps(false);
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
+    );
+  };
 
   useEffect(() => {
-    if (isOpen && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const location = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
-          setCurrentLocation(location);
-          // If no location is selected, start from current location
-          if (!selectedLocation && !tempLocation) {
-            setTempLocation(location);
-          }
-        },
-        (error) => {
-          console.error("Error getting location:", error);
-          // Default to Riyadh if geolocation fails
-          const defaultLocation = { lat: 24.7136, lng: 46.6753 };
-          setCurrentLocation(defaultLocation);
-          if (!selectedLocation && !tempLocation) {
-            setTempLocation(defaultLocation);
-          }
-        }
-      );
+    if (selectedLocation) {
+      setMapCenter(selectedLocation);
     }
-  }, [isOpen, selectedLocation, tempLocation]);
+  }, [isOpen, selectedLocation]);
 
-  const handleMapClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-
-    // Convert click position to coordinates (simplified)
-    const centerLat = currentLocation?.lat || 24.7136;
-    const centerLng = currentLocation?.lng || 46.6753;
-
-    const lat = centerLat + (y - rect.height / 2) * 0.0001;
-    const lng = centerLng + (x - rect.width / 2) * 0.0001;
-
-    setTempLocation({ lat, lng });
-  };
-
-  const handleUseCurrentLocation = () => {
-    if (currentLocation) {
-      setTempLocation(currentLocation);
-    }
-  };
-
-  const handleConfirm = () => {
-    if (tempLocation) {
-      onLocationSelect(tempLocation);
-    }
+  const confirm = () => {
+    if (tempLocation) onLocationSelect(tempLocation);
     onClose();
   };
-
-  const handleCancel = () => {
+  const cancel = () => {
     setTempLocation(selectedLocation);
     onClose();
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={handleCancel}>
-      <DialogContent className="max-w-2xl max-h-[80vh] overflow-hidden">
+    <Dialog open={isOpen} onOpenChange={cancel}>
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-auto">
         <DialogHeader>
           <div className="flex items-center justify-between">
-            <DialogTitle className="flex items-center gap-2">
-              <MapPin className="h-5 w-5" />
-              {t("properties.selectLocation")}
-              {cityName && (
-                <span className="text-sm text-gray-500">- {cityName}</span>
-              )}
+            <DialogTitle>
+              <MapPin className="mr-2" />
+              Select Location {cityName && `— ${cityName}`}
             </DialogTitle>
-            <Button variant="ghost" size="icon" onClick={handleCancel}>
-              <X className="h-4 w-4" />
+            <Button variant="ghost" size="icon" onClick={cancel}>
+              <X />
             </Button>
           </div>
         </DialogHeader>
+        <DialogDescription className="sr-only">
+          Map interface for selecting location
+        </DialogDescription>
 
         <div className="space-y-4">
-          <div className="flex gap-2">
+          <div className="flex items-center gap-3">
             <Button
               variant="outline"
               size="sm"
-              onClick={handleUseCurrentLocation}
-              disabled={!currentLocation}
-              className="flex items-center gap-2"
+              onClick={tryGps}
+              disabled={gettingGps}
             >
-              <Locate className="h-4 w-4" />
-              Use Current Location
+              {gettingGps ? <Loader2 className="animate-spin" /> : <Locate />}
+              {gettingGps ? "Locating…" : "Use My Location"}
             </Button>
+            {error && (
+              <div className="flex items-center gap-2 p-2 bg-amber-50 border rounded">
+                <AlertCircle className="text-amber-600" />
+                <span className="text-amber-800">{error}</span>
+              </div>
+            )}
           </div>
 
-          {/* Simple Map Container */}
-          <div
-            className="relative w-full h-80 bg-gray-50 rounded-lg border border-gray-300 cursor-crosshair overflow-hidden"
-            onClick={handleMapClick}
-          >
-            {/* Simple grid background to simulate map */}
-            <div className="absolute inset-0">
-              <div className="w-full h-full bg-gradient-to-br from-green-50 to-blue-50 opacity-30"></div>
-              <div
-                className="absolute inset-0 opacity-10"
-                style={{
-                  backgroundImage: `
-                    linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)
-                  `,
-                  backgroundSize: "20px 20px",
-                }}
-              ></div>
+          {tempLocation && (
+            <div className="p-3 bg-green-50 border rounded">
+              <MapPin className="inline-block mr-2" />
+              <span>
+                Selected: {tempLocation.lat.toFixed(6)},{" "}
+                {tempLocation.lng.toFixed(6)}
+              </span>
             </div>
+          )}
 
-            {/* Current Location Marker (Blue) */}
-            {currentLocation && (
-              <div
-                className="absolute w-3 h-3 bg-blue-500 rounded-full border-2 border-white shadow-lg transform -translate-x-1/2 -translate-y-1/2 z-10"
-                style={{
-                  left: "50%",
-                  top: "50%",
-                }}
-                title="Your current location"
-              >
-                <div className="absolute inset-0 bg-blue-500 rounded-full animate-ping opacity-75"></div>
-              </div>
-            )}
-
-            {/* Selected Location Marker (Red) */}
-            {tempLocation && (
-              <div
-                className="absolute transform -translate-x-1/2 -translate-y-full z-20"
-                style={{
-                  left: `${
-                    50 +
-                    (tempLocation.lng - (currentLocation?.lng || 46.6753)) *
-                      10000
-                  }%`,
-                  top: `${
-                    50 -
-                    (tempLocation.lat - (currentLocation?.lat || 24.7136)) *
-                      10000
-                  }%`,
-                }}
-              >
-                <MapPin className="h-8 w-8 text-red-500 drop-shadow-lg" />
-              </div>
-            )}
-
-            {/* Instructions */}
-            <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg max-w-xs">
-              <p className="text-sm font-medium text-gray-700">
-                Click anywhere to select location
-              </p>
+          <div className="w-full h-96 border rounded overflow-hidden">
+            <MapContainer
+              center={mapCenter}
+              zoom={15}
+              style={{ height: "100%", width: "100%" }}
+            >
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution="© OpenStreetMap contributors"
+              />
               {tempLocation && (
-                <p className="text-xs text-gray-500 mt-1">
-                  Lat: {tempLocation.lat.toFixed(6)}
-                  <br />
-                  Lng: {tempLocation.lng.toFixed(6)}
-                </p>
+                <Marker position={[tempLocation.lat, tempLocation.lng]} />
               )}
-            </div>
+              <LocationSelector onSelect={setTempLocation} />
+              <MapController center={mapCenter} shouldFlyTo={shouldFly} />
+            </MapContainer>
           </div>
 
-          <div className="flex justify-end gap-2 pt-4 border-t">
-            <Button variant="outline" onClick={handleCancel}>
+          <div className="flex justify-end gap-2 border-t pt-4">
+            <Button variant="outline" onClick={cancel}>
               Cancel
             </Button>
-            <Button onClick={handleConfirm} disabled={!tempLocation}>
-              Confirm Location
+            <Button onClick={confirm} disabled={!tempLocation}>
+              Confirm
             </Button>
           </div>
         </div>
       </DialogContent>
     </Dialog>
   );
-};
-
-export default MapModal;
+}
