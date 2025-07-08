@@ -35,26 +35,24 @@ export const useRegionsQuery = () => {
   return useQuery({
     queryKey: lookupKeys.regions(),
     queryFn: getRegions,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
-  });
-};
-
-// Query for ALL cities (without region filter) - for lookup purposes
-export const useAllCitiesQuery = () => {
-  return useQuery({
-    queryKey: lookupKeys.allCities(),
-    queryFn: () => getCities(), // Call without regionId to get all cities
     staleTime: 5 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
   });
 };
 
-// Query for ALL neighborhoods (without city filter) - for lookup purposes
+export const useAllCitiesQuery = () => {
+  return useQuery({
+    queryKey: lookupKeys.allCities(),
+    queryFn: () => getCities(),
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
+  });
+};
+
 export const useAllNeighborhoodsQuery = () => {
   return useQuery({
     queryKey: lookupKeys.allNeighborhoods(),
-    queryFn: () => getNeighborhoods(), // Call without cityId to get all neighborhoods
+    queryFn: () => getNeighborhoods(),
     staleTime: 5 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
   });
@@ -66,7 +64,7 @@ export const useCitiesQuery = (regionId?: number) => {
     queryFn: () => getCities(regionId),
     staleTime: 5 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
-    enabled: !!regionId, // Only fetch when regionId is provided
+    enabled: !!regionId,
   });
 };
 
@@ -76,7 +74,7 @@ export const useNeighborhoodsQuery = (cityId?: number) => {
     queryFn: () => getNeighborhoods(cityId),
     staleTime: 5 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
-    enabled: !!cityId, // Only fetch when cityId is provided
+    enabled: !!cityId,
   });
 };
 
@@ -134,5 +132,4 @@ export const usePropertyFeaturesQuery = () => {
   });
 };
 
-// Re-export the API functions for use in context and other places
 export { getCities, getNeighborhoods };
