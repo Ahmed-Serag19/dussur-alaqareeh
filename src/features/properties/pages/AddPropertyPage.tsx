@@ -5,8 +5,8 @@ import PropertyFormHeader from "@/features/properties/components/PropertyFormHea
 import BasicInfoSection from "@/features/properties/components/BasicInfoSection";
 import { LocationSection } from "@/features/properties/components/LocationSection";
 import { PropertySpecsSection } from "@/features/properties/components/PropertySpecsSection";
+import PropertyImagesSection from "@/features/properties/components/PropertyImagesSection";
 import { usePropertyForm } from "@/features/properties/hooks/usePropertyForm";
-
 import { usePropertySubmission } from "@/features/properties/hooks/usePropertySubmission";
 import type { CreatePropertyFormData } from "@/features/properties/types/property.types";
 import useLanguage from "@/hooks/useLanguage";
@@ -16,6 +16,7 @@ import { useLookupContext } from "../context/lookup-context";
 
 const AddPropertyPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const {
     form,
     selectedRegion,
@@ -73,7 +74,7 @@ const AddPropertyPage = () => {
     }
 
     try {
-      await submitProperty(data, selectedLocation);
+      await submitProperty(data, selectedLocation, selectedImages);
     } catch (error) {
       console.error("Submission error:", error);
     }
@@ -130,6 +131,10 @@ const AddPropertyPage = () => {
     {
       title: t("properties.features.title"),
       description: t("properties.features.subtitle"),
+    },
+    {
+      title: t("properties.images.title"),
+      description: t("properties.images.description"),
     },
   ];
 
@@ -227,6 +232,12 @@ const AddPropertyPage = () => {
         {currentStep === 4 && (
           <PropertyFeaturesSection watch={watch} setValue={setValue} />
         )}
+        {currentStep === 5 && (
+          <PropertyImagesSection
+            images={selectedImages}
+            onImagesChange={setSelectedImages}
+          />
+        )}
 
         {/* Navigation Buttons */}
         <div className="flex justify-between items-center pt-6 border-t border-gray-200">
@@ -267,4 +278,5 @@ const AddPropertyPage = () => {
     </div>
   );
 };
+
 export default AddPropertyPage;

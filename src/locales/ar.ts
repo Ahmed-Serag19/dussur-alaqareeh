@@ -27,6 +27,7 @@ const ar = {
     import: "استيراد",
     refresh: "تحديث",
     retry: "إعادة المحاولة",
+    tryAgain: "حاول مرة أخرى",
     or: "أو",
   },
 
@@ -62,6 +63,7 @@ const ar = {
     dontHaveAccount: "ليس لديك حساب؟",
     loginHere: "سجل دخولك هنا",
     registerHere: "أنشئ حسابك هنا",
+    sessionExpired: "انتهت صلاحية الجلسة. يرجى تسجيل الدخول مرة أخرى.",
     login: {
       title: "تسجيل دخول",
       email: "البريد الإلكتروني",
@@ -298,6 +300,21 @@ const ar = {
       view: "عرض",
       edit: "تعديل",
       delete: "حذف",
+    },
+
+    // Images
+    images: {
+      title: "صور العقار",
+      description: "قم برفع صور العقار (حد أقصى 10 صور)",
+      dragDropText: "اسحب وأفلت الصور هنا",
+      orClickText: "أو انقر للتصفح",
+      selectImages: "اختر الصور",
+      selectedImages: "الصور المختارة",
+      clearAll: "مسح الكل",
+      maxImagesExceeded: "الحد الأقصى 10 صور مسموح",
+      uploadSuccess: "تم رفع الصور بنجاح",
+      uploadError: "خطأ في رفع الصور",
+      imageRequired: "مطلوب صورة واحدة على الأقل",
     },
   },
 };

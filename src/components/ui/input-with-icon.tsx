@@ -14,10 +14,12 @@ export const InputWithIcon = forwardRef<HTMLInputElement, InputWithIconProps>(
     const { isRTL } = useLanguage();
 
     return (
-      <div className="relative group">
+      <div className="relative group ">
         <Input
           ref={ref}
-          className={`h-10 ${isRTL ? "pr-10 pl-4" : "pl-10 pr-4"} ${
+          className={`h-10 placeholder:py-3  ${
+            isRTL ? "pr-10 pl-4" : "pl-10 pr-4"
+          } ${
             rightIcon ? (isRTL ? "pl-10" : "pr-10") : ""
           } border-2 border-gray-200 rounded-xl bg-gray-50/50 transition-all duration-200 focus:border-${focusColor}-500 focus:bg-white focus:ring-4 focus:ring-${focusColor}-500/10 hover:border-gray-300 ${
             isRTL ? "text-right" : "text-left"

@@ -24,18 +24,21 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     return <Navigate to="/auth/login" replace />;
   }
 
+  let isExpired = false;
   try {
     const decoded = jwtDecode<JwtPayload>(token);
     const now = Date.now() / 1000;
-
     if (decoded.exp < now) {
-      localStorage.removeItem("token");
-      return <Navigate to="/auth/login" replace />;
+      isExpired = true;
     }
-
-    return <>{children}</>;
   } catch {
+    isExpired = true;
+  }
+
+  if (isExpired) {
     localStorage.removeItem("token");
     return <Navigate to="/auth/login" replace />;
   }
+
+  return <>{children}</>;
 };

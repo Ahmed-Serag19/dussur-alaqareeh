@@ -24,7 +24,7 @@ const TitleInput = ({ register, error }: TitleInputProps) => {
       <Input
         id="title"
         placeholder={t("properties.titlePlaceholder")}
-        className={isRTL ? "text-right" : "text-left"}
+        className={`${isRTL ? "text-right" : "text-left"} h-10`}
         {...register("title")}
       />
       {error && (

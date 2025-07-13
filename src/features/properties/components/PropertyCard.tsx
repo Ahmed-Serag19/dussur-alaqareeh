@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Card,
   CardContent,
@@ -29,7 +27,7 @@ import { PropertyStatusBadge } from "./PropertyStatusBadge";
 import useLanguage from "@/hooks/useLanguage";
 import { useTranslation } from "react-i18next";
 import { useLookupContext } from "../context/lookup-context";
-
+import clsx from "clsx";
 interface PropertyCardProps {
   property: Property;
   onView: (property: Property) => void;
@@ -46,6 +44,7 @@ export const PropertyCard = ({
   const { isRTL } = useLanguage();
   const { t } = useTranslation();
   const { getFullLocationString, getPropertyTypeName } = useLookupContext();
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat(isRTL ? "ar-SA" : "en-US").format(price);
   };
@@ -59,21 +58,23 @@ export const PropertyCard = ({
   };
 
   return (
-    <Card className="group hover:shadow-lg min-w-xs max-w-sm transition-all duration-200 border-gray-200 hover:border-gray-300">
+    <Card className="group rounded-xl shadow-sm hover:shadow-lg border border-gray-200 bg-white transition-all duration-200 max-w-sm min-w-xs overflow-hidden">
       <CardHeader className="pb-3">
         <div
-          className={`flex items-start justify-between ${
-            isRTL ? "flex-row-reverse" : ""
-          }`}
+          className={clsx(
+            "flex items-start justify-between",
+            isRTL && "flex-row-reverse"
+          )}
         >
-          <div className={`flex-1 ${isRTL ? "text-right" : "text-left"}`}>
-            <h3 className="font-semibold text-lg text-gray-900 line-clamp-1 mb-1">
+          <div className={clsx("flex-1", isRTL ? "text-right" : "text-left")}>
+            <h3 className="font-semibold text-lg text-slate-800 line-clamp-1 mb-1">
               {property.title}
             </h3>
             <div
-              className={`flex items-center gap-1 text-gray-600 ${
-                isRTL ? "flex-row-reverse" : ""
-              }`}
+              className={clsx(
+                "flex items-center gap-1 text-slate-500",
+                isRTL && "flex-row-reverse"
+              )}
             >
               <MapPin className="h-4 w-4" />
               <span className="text-sm">
@@ -120,41 +121,45 @@ export const PropertyCard = ({
         <div className="space-y-3">
           {/* Price and Property Type */}
           <div
-            className={`flex items-center justify-between ${
-              isRTL ? "flex-row-reverse" : ""
-            }`}
+            className={clsx(
+              "flex items-center justify-between",
+              isRTL && "flex-row-reverse"
+            )}
           >
-            <span className="text-2xl font-bold text-green-600">
+            <span className="text-2xl font-bold text-blue-600">
               {formatPrice(property.price)} {isRTL ? "ريال" : "SAR"}
             </span>
-            <span className="text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded">
+            <span className="text-xs text-blue-700 bg-blue-100 px-2 py-1 rounded-full font-medium">
               {getPropertyTypeName(property.propertyTypeId)}
             </span>
           </div>
 
           {/* Property Details */}
           <div
-            className={`grid grid-cols-2 gap-3 text-sm ${
+            className={clsx(
+              "grid grid-cols-2 gap-3 text-sm",
               isRTL ? "text-right" : "text-left"
-            }`}
+            )}
           >
             <div
-              className={`flex items-center gap-2 ${
-                isRTL ? "flex-row-reverse" : ""
-              }`}
+              className={clsx(
+                "flex items-center gap-2",
+                isRTL && "flex-row-reverse"
+              )}
             >
-              <Ruler className="h-4 w-4 text-gray-500" />
-              <span className="text-gray-600">
+              <Ruler className="h-4 w-4 text-slate-400" />
+              <span className="text-slate-600">
                 {property.area} {isRTL ? "م²" : "sqm"}
               </span>
             </div>
             <div
-              className={`flex items-center gap-2 ${
-                isRTL ? "flex-row-reverse" : ""
-              }`}
+              className={clsx(
+                "flex items-center gap-2",
+                isRTL && "flex-row-reverse"
+              )}
             >
-              <Home className="h-4 w-4 text-gray-500" />
-              <span className="text-gray-600">
+              <Home className="h-4 w-4 text-slate-400" />
+              <span className="text-slate-600">
                 {property.roomsCount} {isRTL ? "غرف" : "rooms"}
               </span>
             </div>
@@ -162,7 +167,7 @@ export const PropertyCard = ({
 
           {/* Description */}
           {(property.descriptionAr || property.descriptionEn) && (
-            <p className="text-gray-600 text-sm line-clamp-2">
+            <p className="text-slate-500 text-sm line-clamp-2">
               {isRTL ? property.descriptionAr : property.descriptionEn}
             </p>
           )}
@@ -172,9 +177,10 @@ export const PropertyCard = ({
       <CardFooter className="pt-3 border-t border-gray-100 flex-col space-y-3">
         {/* Date - Separate line */}
         <div
-          className={`flex items-center gap-1 text-xs text-gray-500 w-full ${
+          className={clsx(
+            "flex items-center gap-1 text-xs text-slate-400 w-full",
             isRTL ? "flex-row-reverse justify-end" : "justify-start"
-          }`}
+          )}
         >
           <Calendar className="h-3 w-3" />
           <span>{formatDate(property.createdAt)}</span>
@@ -186,7 +192,7 @@ export const PropertyCard = ({
             variant="outline"
             size="sm"
             onClick={() => onView(property)}
-            className="flex-1 gap-1"
+            className="flex-1 gap-1 border-blue-600 text-blue-600 hover:bg-blue-50"
           >
             <Eye className="h-3 w-3" />
             {t("properties.actions.view")}
@@ -195,7 +201,7 @@ export const PropertyCard = ({
             variant="default"
             size="sm"
             onClick={() => onEdit(property)}
-            className="flex-1 gap-1"
+            className="flex-1 gap-1 bg-blue-600 hover:bg-blue-700 text-white"
           >
             <Edit className="h-3 w-3" />
             {t("properties.actions.edit")}

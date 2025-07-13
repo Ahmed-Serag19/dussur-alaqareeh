@@ -1,45 +1,42 @@
-import { axiosInstance } from "@/lib/axios";
+import axios from "axios";
 import type { CreatePropertyDto } from "../types/property.types";
 
-export const createProperty = async (data: CreatePropertyDto) => {
-  console.log("API call - Creating property with data:", data);
+export const createProperty = async (
+  data: CreatePropertyDto,
+  images: File[] = []
+) => {
+  const formData = new FormData();
 
-  const apiPayload = {
-    title: data.title,
-    description: data.description,
-    price: data.price,
-    cityId: data.cityId,
-    regionId: data.regionId,
-    neighborhoodId: data.neighborhoodId,
-    propertyTypeId: data.propertyTypeId,
-    listingTypeId: data.listingTypeId,
-    conditionId: data.conditionId,
-    finishTypeId: data.finishTypeId,
-    streetAr: data.streetAr,
-    streetEn: data.streetEn,
-    longitude: data.longitude,
-    latitude: data.latitude,
-    descriptionAr: data.descriptionAr,
-    descriptionEn: data.descriptionEn,
-    area: data.area,
-    roomsCount: data.roomsCount,
-    bathroomsCount: data.bathroomsCount,
-    livingroomsCount: data.livingroomsCount,
-    floorsCount: data.floorsCount,
-    buildingAge: data.buildingAge,
-    statusId: data.statusId,
-    featureIds: data.featureIds,
-  };
+  // Append property as a JSON Blob with correct content type
+  formData.append(
+    "property",
+    new Blob([JSON.stringify(data)], { type: "application/json" })
+  );
+
+  // Append images as files
+  for (let i = 0; i < images.length; i++) {
+    formData.append("images", images[i]);
+  }
 
   try {
-    const response = await axiosInstance.post(
+    const multipartAxios = axios.create({
+      baseURL: "https://backend.aqaar.dussur.sa/api",
+    });
+
+    const token = localStorage.getItem("token");
+    if (token) {
+      multipartAxios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${token}`;
+    }
+
+    // Do NOT set Content-Type header, let the browser handle it
+    const response = await multipartAxios.post(
       "/temp-properties/addProperty",
-      apiPayload
+      formData
     );
-    console.log("API response:", response);
     return response;
   } catch (error) {
-    console.error("API error:", error);
     throw error;
   }
 };

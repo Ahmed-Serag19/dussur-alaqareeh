@@ -10,7 +10,23 @@ export const usePropertySubmission = () => {
   const { t } = useLanguage();
 
   const mutation = useMutation({
-    mutationFn: createProperty,
+    mutationFn: ({
+      data,
+      images,
+    }: {
+      data: Omit<CreatePropertyFormData, "featureIds"> & {
+        statusId: number;
+        featureIds: number[];
+      };
+      images: File[];
+    }) =>
+      createProperty(
+        {
+          ...data,
+          featureIds: data.featureIds ?? [],
+        },
+        images
+      ),
     onSuccess: () => {
       toast.success(t("properties.createSuccess"));
       navigate("/properties");
@@ -36,10 +52,12 @@ export const usePropertySubmission = () => {
 
   const submitProperty = async (
     data: CreatePropertyFormData,
-    selectedLocation: { lat: number; lng: number } | null
+    selectedLocation: { lat: number; lng: number } | null,
+    images: File[] = []
   ) => {
     console.log("Submitting property with data:", data);
     console.log("Selected location:", selectedLocation);
+    console.log("Images to upload:", images);
 
     if (!selectedLocation) {
       toast.error(t("properties.validation.locationRequired"));
@@ -70,14 +88,13 @@ export const usePropertySubmission = () => {
       floorsCount: data.floorsCount,
       buildingAge: data.buildingAge,
       statusId: 1,
-      // createdBy: 1001,
       featureIds: data.featureIds ?? [],
     };
 
     console.log("Final property data being sent:", propertyData);
 
     try {
-      await mutation.mutateAsync(propertyData);
+      await mutation.mutateAsync({ data: propertyData, images });
     } catch (error) {
       console.error("Mutation error:", error);
       throw error;

@@ -27,6 +27,7 @@ const en = {
     import: "Import",
     refresh: "Refresh",
     retry: "Retry",
+    tryAgain: "Try Again",
     or: "Or",
   },
 
@@ -61,6 +62,7 @@ const en = {
     dontHaveAccount: "Don't have an account?",
     loginHere: "Login here",
     registerHere: "Register here",
+    sessionExpired: "Your session has expired. Please log in again.",
     login: {
       title: "Login",
       login: "Login",
@@ -304,6 +306,21 @@ const en = {
       view: "View",
       edit: "Edit",
       delete: "Delete",
+    },
+
+    // Images
+    images: {
+      title: "Property Images",
+      description: "Upload images of your property (up to 10 images)",
+      dragDropText: "Drag and drop images here",
+      orClickText: "or click to browse",
+      selectImages: "Select Images",
+      selectedImages: "Selected Images",
+      clearAll: "Clear All",
+      maxImagesExceeded: "Maximum 10 images allowed",
+      uploadSuccess: "Images uploaded successfully",
+      uploadError: "Error uploading images",
+      imageRequired: "At least one image is required",
     },
   },
 };
