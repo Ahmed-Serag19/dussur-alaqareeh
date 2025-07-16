@@ -322,6 +322,15 @@ const en = {
       uploadError: "Error uploading images",
       imageRequired: "At least one image is required",
     },
+
+    mapModal: {
+      selectLocation: "Select Location",
+      mapInterface: "Map interface for selecting location",
+      locating: "Locating…",
+      useMyLocation: "Use My Location",
+      usingIpLocation: "Using IP-based location",
+      couldNotGetLocation: "Could not get location.",
+    },
   },
 };
 export default en;

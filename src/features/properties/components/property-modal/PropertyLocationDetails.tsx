@@ -25,15 +25,21 @@ export const PropertyLocationDetails = ({
 }: PropertyLocationDetailsProps) => {
   const { t } = useTranslation();
 
-  const formatCoordinates = (lat: number, lng: number) => {
-    return `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+  const formatCoordinates = (
+    lat: number | undefined,
+    lng: number | undefined
+  ) => {
+    if (typeof lat === "number" && typeof lng === "number") {
+      return `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+    }
+    return "-";
   };
 
   return (
     <div className="space-y-4">
       <h3
         className={`text-lg font-semibold flex items-center gap-2 ${
-          isRTL ? "justify-end" : ""
+          isRTL ? "justify-start" : ""
         }`}
       >
         <MapPin className="h-5 w-5" />

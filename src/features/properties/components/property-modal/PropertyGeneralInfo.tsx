@@ -21,7 +21,7 @@ export const PropertyGeneralInfo = ({
     <div className="space-y-4">
       <h3
         className={`text-lg font-semibold flex items-center gap-2 ${
-          isRTL ? "justify-end" : ""
+          isRTL ? "justify-start" : ""
         }`}
       >
         <Home className="h-5 w-5" />
@@ -40,7 +40,7 @@ export const PropertyGeneralInfo = ({
           </label>
           <p
             className={`text-gray-900 flex items-center gap-1 ${
-              isRTL ? "justify-end" : ""
+              isRTL ? "justify-start" : ""
             }`}
           >
             {property.area} {isRTL ? "متر مربع" : "sqm"}

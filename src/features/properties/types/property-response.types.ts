@@ -35,11 +35,8 @@ export interface Property {
   createdAt: string;
   updatedAt: string;
   featureIds?: number[];
-  features?: Array<{
-    id: number;
-    nameAr: string;
-    nameEn: string;
-  }>;
+  features?: number[];
+  imageUrls?: string[];
 }
 
 export type PropertyStatus = "PENDING" | "APPROVED" | "REJECTED";

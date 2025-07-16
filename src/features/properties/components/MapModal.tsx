@@ -19,6 +19,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { MapPin, X, Locate, Loader2, AlertCircle } from "lucide-react";
 import { useIpLocationQuery } from "@/features/properties/hooks/useIpLocationQuery";
+import useLanguage from "@/hooks/useLanguage";
 
 // Leaflet fix
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -73,6 +74,7 @@ export default function MapModal({
   selectedLocation,
   cityName,
 }: MapModalProps) {
+  const { isRTL, t } = useLanguage();
   const defaultCenter = { lat: 20, lng: 0 };
   const [mapCenter, setMapCenter] = useState(selectedLocation || defaultCenter);
   const [tempLocation, setTempLocation] = useState(selectedLocation);
@@ -99,9 +101,9 @@ export default function MapModal({
           setMapCenter(coords);
           setTempLocation(coords);
           setShouldFly(true);
-          setError("Using IP-based location");
+          setError(t("properties.mapModal.usingIpLocation"));
         } else {
-          setError("Could not get location.");
+          setError(t("properties.mapModal.couldNotGetLocation"));
         }
         setGettingGps(false);
       },
@@ -131,7 +133,8 @@ export default function MapModal({
           <div className="flex items-center justify-between">
             <DialogTitle>
               <MapPin className="mr-2" />
-              Select Location {cityName && `— ${cityName}`}
+              {t("properties.mapModal.selectLocation")}
+              {cityName && ` — ${cityName}`}
             </DialogTitle>
             <Button variant="ghost" size="icon" onClick={cancel}>
               <X />
@@ -139,11 +142,15 @@ export default function MapModal({
           </div>
         </DialogHeader>
         <DialogDescription className="sr-only">
-          Map interface for selecting location
+          {t("properties.mapModal.mapInterface")}
         </DialogDescription>
 
         <div className="space-y-4">
-          <div className="flex items-center gap-3">
+          <div
+            className={`flex items-center gap-3 ${
+              isRTL ? "flex-row-reverse" : ""
+            }`}
+          >
             <Button
               variant="outline"
               size="sm"
@@ -151,7 +158,9 @@ export default function MapModal({
               disabled={gettingGps}
             >
               {gettingGps ? <Loader2 className="animate-spin" /> : <Locate />}
-              {gettingGps ? "Locating…" : "Use My Location"}
+              {gettingGps
+                ? t("properties.mapModal.locating")
+                : t("properties.mapModal.useMyLocation")}
             </Button>
             {error && (
               <div className="flex items-center gap-2 p-2 bg-amber-50 border rounded">
@@ -161,21 +170,14 @@ export default function MapModal({
             )}
           </div>
 
-          {tempLocation && (
-            <div className="p-3 bg-green-50 border rounded">
-              <MapPin className="inline-block mr-2" />
-              <span>
-                Selected: {tempLocation.lat.toFixed(6)},{" "}
-                {tempLocation.lng.toFixed(6)}
-              </span>
-            </div>
-          )}
+          {/* Hide lat/lng display */}
 
           <div className="w-full h-96 border rounded overflow-hidden">
             <MapContainer
               center={mapCenter}
               zoom={15}
               style={{ height: "100%", width: "100%" }}
+              className={isRTL ? "leaflet-rtl" : ""}
             >
               <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -189,12 +191,12 @@ export default function MapModal({
             </MapContainer>
           </div>
 
-          <div className="flex justify-end gap-2 border-t pt-4">
+          <div className="flex justify-end gap-2 border-t pt-4 pb-4">
             <Button variant="outline" onClick={cancel}>
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button onClick={confirm} disabled={!tempLocation}>
-              Confirm
+              {t("common.confirm")}
             </Button>
           </div>
         </div>

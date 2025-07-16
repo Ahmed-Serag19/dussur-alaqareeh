@@ -182,7 +182,7 @@ const ar = {
     selectFinishType: "اختر نوع التشطيب",
     roomsCount: "عدد الغرف",
     bathroomsCount: "عدد دورات المياه",
-    livingroomsCount: "عدد غرف المعيشة",
+    livingroomsCount: "عدد الصالات",
     floorsCount: "عدد الطوابق",
     buildingAge: "عمر البناء (بالسنوات)",
 
@@ -315,6 +315,15 @@ const ar = {
       uploadSuccess: "تم رفع الصور بنجاح",
       uploadError: "خطأ في رفع الصور",
       imageRequired: "مطلوب صورة واحدة على الأقل",
+    },
+
+    mapModal: {
+      selectLocation: "اختيار الموقع",
+      mapInterface: "واجهة الخريطة لاختيار الموقع",
+      locating: "جاري تحديد الموقع...",
+      useMyLocation: "استخدم موقعي الحالي",
+      usingIpLocation: "تم استخدام الموقع بناءً على عنوان IP",
+      couldNotGetLocation: "تعذر الحصول على الموقع.",
     },
   },
 };

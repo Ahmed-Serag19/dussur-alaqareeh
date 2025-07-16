@@ -28,6 +28,7 @@ import useLanguage from "@/hooks/useLanguage";
 import { useTranslation } from "react-i18next";
 import { useLookupContext } from "../context/lookup-context";
 import clsx from "clsx";
+import { ImageCarousel } from "./ImageCarousel";
 interface PropertyCardProps {
   property: Property;
   onView: (property: Property) => void;
@@ -57,8 +58,13 @@ export const PropertyCard = ({
     });
   };
 
+  // Use all images for the card carousel
+  const images = Array.isArray(property.imageUrls) ? property.imageUrls : [];
+
   return (
-    <Card className="group rounded-xl shadow-sm hover:shadow-lg border border-gray-200 bg-white transition-all duration-200 max-w-sm min-w-xs overflow-hidden">
+    <Card className="group rounded-xl shadow-sm hover:shadow-lg border pt-0 border-gray-200 bg-white transition-all duration-200 max-w-md sm:min-w-md  overflow-hidden">
+      {/* Image Carousel or Placeholder */}
+      <ImageCarousel images={images} heightClass="h-52" />
       <CardHeader className="pb-3">
         <div
           className={clsx(

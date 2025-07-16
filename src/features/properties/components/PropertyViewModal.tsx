@@ -5,7 +5,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
-import { ScrollArea } from "@/components/ui/scroll-area";
+// import { ScrollArea } from "@/components/ui/scroll-area"; // Remove this
 import type { Property } from "@/features/properties/types/property-response.types";
 import useLanguage from "@/hooks/useLanguage";
 import { useLookupContext } from "../context/lookup-context";
@@ -18,6 +18,7 @@ import { PropertyLocationDetails } from "./property-modal/PropertyLocationDetail
 import { PropertySpecifications } from "./property-modal/PropertySpecifications";
 import { PropertySystemInfo } from "./property-modal/PropertySystemInfo";
 import { PropertyFeaturesView } from "./property-modal/PropertyFeaturesView";
+import { ImageCarousel } from "./ImageCarousel";
 
 interface PropertyViewModalProps {
   property: Property | null;
@@ -46,12 +47,16 @@ export const PropertyViewModal = ({
 
   if (!property) return null;
 
+  // Use all images for the modal carousel
+  const images = Array.isArray(property.imageUrls) ? property.imageUrls : [];
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
-        className={`max-w-4xl max-h-[90vh] py-2 px-0 ${
+        className={`max-w-5xl w-full sm:w-[95vw] md:w-[90vw] lg:w-[80vw] xl:w-[70vw] 2xl:w-[60vw] max-h-[90vh] p-0 overflow-auto flex flex-col ${
           isRTL ? "text-right" : "text-left"
         }`}
+        style={{ padding: 0 }}
       >
         <DialogHeader className="p-6 pb-0">
           <DialogTitle className="sr-only">{property.title}</DialogTitle>
@@ -63,46 +68,50 @@ export const PropertyViewModal = ({
           />
         </DialogHeader>
 
-        <ScrollArea className="max-h-[calc(90vh-120px)]">
-          <div className="p-6 space-y-6">
-            <PropertyPriceSection price={property.price} isRTL={isRTL} />
+        {/* Image Carousel at the top */}
+        <div className="pt-2 pb-4">
+          <ImageCarousel images={images} heightClass="h-80" />
+        </div>
 
-            <PropertyGeneralInfo
-              property={property}
-              isRTL={isRTL}
-              getPropertyTypeName={getPropertyTypeName}
-              getListingTypeName={getListingTypeName}
-            />
+        {/* Main content scrollable area - now just a normal div */}
+        <div className="p-6 space-y-6">
+          <PropertyPriceSection price={property.price} isRTL={isRTL} />
 
-            <Separator />
+          <PropertyGeneralInfo
+            property={property}
+            isRTL={isRTL}
+            getPropertyTypeName={getPropertyTypeName}
+            getListingTypeName={getListingTypeName}
+          />
 
-            <PropertyLocationDetails
-              property={property}
-              isRTL={isRTL}
-              getRegionName={getRegionName}
-              getCityName={getCityName}
-              getNeighborhoodName={getNeighborhoodName}
-              getFullLocationString={getFullLocationString}
-            />
+          <Separator />
 
-            <Separator />
+          <PropertyLocationDetails
+            property={property}
+            isRTL={isRTL}
+            getRegionName={getRegionName}
+            getCityName={getCityName}
+            getNeighborhoodName={getNeighborhoodName}
+            getFullLocationString={getFullLocationString}
+          />
 
-            <PropertySpecifications
-              property={property}
-              isRTL={isRTL}
-              getPropertyConditionName={getPropertyConditionName}
-              getFinishingTypeName={getFinishingTypeName}
-            />
+          <Separator />
 
-            <Separator />
+          <PropertySpecifications
+            property={property}
+            isRTL={isRTL}
+            getPropertyConditionName={getPropertyConditionName}
+            getFinishingTypeName={getFinishingTypeName}
+          />
 
-            <PropertyFeaturesView property={property} isRTL={isRTL} />
+          <Separator />
 
-            <Separator />
+          <PropertyFeaturesView property={property} isRTL={isRTL} />
 
-            <PropertySystemInfo property={property} isRTL={isRTL} />
-          </div>
-        </ScrollArea>
+          <Separator />
+
+          <PropertySystemInfo property={property} isRTL={isRTL} />
+        </div>
       </DialogContent>
     </Dialog>
   );
