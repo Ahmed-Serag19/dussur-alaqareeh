@@ -18,25 +18,19 @@ export const createProperty = async (
     formData.append("images", images[i]);
   }
 
-  try {
-    const multipartAxios = axios.create({
-      baseURL: "https://backend.aqaar.dussur.sa/api",
-    });
+  const multipartAxios = axios.create({
+    baseURL: "https://backend.aqaar.dussur.sa/api",
+  });
 
-    const token = localStorage.getItem("token");
-    if (token) {
-      multipartAxios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${token}`;
-    }
-
-    // Do NOT set Content-Type header, let the browser handle it
-    const response = await multipartAxios.post(
-      "/temp-properties/addProperty",
-      formData
-    );
-    return response;
-  } catch (error) {
-    throw error;
+  const token = localStorage.getItem("token");
+  if (token) {
+    multipartAxios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   }
+
+  // Do NOT set Content-Type header, let the browser handle it
+  const response = await multipartAxios.post(
+    "/temp-properties/addProperty",
+    formData
+  );
+  return response;
 };

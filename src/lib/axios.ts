@@ -9,6 +9,10 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
+    // Attach Accept-Language header based on saved language (defaults to 'ar')
+    const lang = localStorage.getItem("i18nextLng") || "ar";
+    config.headers["Accept-Language"] = lang.startsWith("en") ? "en" : "ar";
+
     const token = localStorage.getItem("token");
     const isPublicEndpoint =
       config.url?.includes("/auth/login") ||

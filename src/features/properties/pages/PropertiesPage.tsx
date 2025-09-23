@@ -48,12 +48,6 @@ export const PropertiesPage = () => {
     });
   };
 
-  const handleEditProperty = (property: Property) => {
-    // TODO: Navigate to edit property page
-    console.log("Edit property:", property);
-    toast.success(t("properties.list.editProperty", { title: property.title }));
-  };
-
   const handleRefresh = () => {
     refetch();
     toast.success(t("properties.list.refreshSuccess"));
@@ -156,7 +150,6 @@ export const PropertiesPage = () => {
             properties={currentProperties}
             isLoading={isLoadingData}
             onViewProperty={handleViewProperty}
-            onEditProperty={handleEditProperty}
             onDeleteProperty={deleteProperty}
             isDeletingProperty={isDeletingProperty}
           />
@@ -167,7 +160,6 @@ export const PropertiesPage = () => {
         property={viewModal.property}
         isOpen={viewModal.isOpen}
         onClose={handleCloseViewModal}
-        onEdit={handleEditProperty}
       />
     </>
   );

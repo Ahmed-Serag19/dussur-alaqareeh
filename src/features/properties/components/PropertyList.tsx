@@ -8,7 +8,7 @@ interface PropertyListProps {
   properties: Property[];
   isLoading: boolean;
   onViewProperty: (property: Property) => void;
-  onEditProperty: (property: Property) => void;
+
   onDeleteProperty: (id: number) => void;
   isDeletingProperty?: boolean;
 }
@@ -17,7 +17,7 @@ export const PropertyList = ({
   properties,
   isLoading,
   onViewProperty,
-  onEditProperty,
+
   onDeleteProperty,
   isDeletingProperty = false,
 }: PropertyListProps) => {
@@ -86,7 +86,6 @@ export const PropertyList = ({
             key={property.id}
             property={property}
             onView={onViewProperty}
-            onEdit={onEditProperty}
             onDelete={handleDeleteClick}
           />
         ))}

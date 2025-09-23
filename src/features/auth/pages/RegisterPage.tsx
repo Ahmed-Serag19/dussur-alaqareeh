@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import RegisterForm from "@/features/auth/components/RegisterForm";
-import { handleLogout as registerUser } from "@/features/auth/api/auth.api";
+import { handleRegister as registerUser } from "@/features/auth/api/auth.api";
 import type { RegisterDto } from "@/features/auth/types/auth.types";
 import useLanguage from "@/hooks/useLanguage";
 

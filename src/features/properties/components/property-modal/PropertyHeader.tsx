@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Edit, X } from "lucide-react";
+import { X } from "lucide-react";
 import { PropertyStatusBadge } from "../PropertyStatusBadge";
 import { useTranslation } from "react-i18next";
 import type { Property } from "@/features/properties/types/property-response.types";
@@ -7,17 +7,16 @@ import type { Property } from "@/features/properties/types/property-response.typ
 interface PropertyHeaderProps {
   property: Property;
   isRTL: boolean;
-  onEdit?: (property: Property) => void;
   onClose: () => void;
 }
 
 export const PropertyHeader = ({
   property,
   isRTL,
-  onEdit,
+
   onClose,
 }: PropertyHeaderProps) => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
 
   return (
     <div
@@ -28,17 +27,6 @@ export const PropertyHeader = ({
       <div
         className={`flex items-center gap-2 ${isRTL ? "" : "flex-row-reverse"}`}
       >
-        {onEdit && (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => onEdit(property)}
-            className="gap-2"
-          >
-            <Edit className="h-4 w-4" />
-            {t("properties.actions.edit")}
-          </Button>
-        )}
         <Button variant="ghost" size="sm" onClick={onClose}>
           <X className="h-4 w-4" />
         </Button>

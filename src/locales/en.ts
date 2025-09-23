@@ -203,6 +203,7 @@ const en = {
     editProperty: "Edit Property",
     deleteProperty: "Delete Property",
     viewProperty: "View Property",
+    cancel: "Cancel",
 
     // Status
     status: {

@@ -19,6 +19,7 @@ export const createRegisterSchema = (t: (key: string) => string) =>
       .string()
       .min(1, t("auth.validation.nameRequired"))
       .min(2, t("auth.validation.nameMinLength")),
+    role: z.enum(["Admin", "User"]).default("Admin"),
     email: z
       .string()
       .min(1, t("auth.validation.emailRequired"))
@@ -47,6 +48,7 @@ export const registerSchema = z.object({
     .string()
     .min(1, "Name is required")
     .min(2, "Name must be at least 2 characters"),
+  role: z.enum(["Admin", "User"]).default("Admin"),
   email: z.string().min(1, "Email is required").email("Email is invalid"),
   phone: z
     .string()

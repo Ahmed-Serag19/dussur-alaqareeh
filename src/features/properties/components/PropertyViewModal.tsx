@@ -24,14 +24,12 @@ interface PropertyViewModalProps {
   property: Property | null;
   isOpen: boolean;
   onClose: () => void;
-  onEdit?: (property: Property) => void;
 }
 
 export const PropertyViewModal = ({
   property,
   isOpen,
   onClose,
-  onEdit,
 }: PropertyViewModalProps) => {
   const { isRTL } = useLanguage();
   const {
@@ -60,12 +58,7 @@ export const PropertyViewModal = ({
       >
         <DialogHeader className="p-6 pb-0">
           <DialogTitle className="sr-only">{property.title}</DialogTitle>
-          <PropertyHeader
-            property={property}
-            isRTL={isRTL}
-            onEdit={onEdit}
-            onClose={onClose}
-          />
+          <PropertyHeader property={property} isRTL={isRTL} onClose={onClose} />
         </DialogHeader>
 
         {/* Image Carousel at the top */}

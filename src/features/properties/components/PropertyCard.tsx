@@ -11,7 +11,6 @@ import {
   Ruler,
   Calendar,
   Eye,
-  Edit,
   Trash2,
   MoreVertical,
 } from "lucide-react";
@@ -32,14 +31,14 @@ import { ImageCarousel } from "./ImageCarousel";
 interface PropertyCardProps {
   property: Property;
   onView: (property: Property) => void;
-  onEdit: (property: Property) => void;
+
   onDelete: (property: Property) => void;
 }
 
 export const PropertyCard = ({
   property,
   onView,
-  onEdit,
+
   onDelete,
 }: PropertyCardProps) => {
   const { isRTL } = useLanguage();
@@ -105,10 +104,7 @@ export const PropertyCard = ({
                   <Eye className="h-4 w-4 mr-2" />
                   {t("properties.actions.view")}
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => onEdit(property)}>
-                  <Edit className="h-4 w-4 mr-2" />
-                  {t("properties.actions.edit")}
-                </DropdownMenuItem>
+
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={() => onDelete(property)}
@@ -198,19 +194,10 @@ export const PropertyCard = ({
             variant="outline"
             size="sm"
             onClick={() => onView(property)}
-            className="flex-1 gap-1 border-blue-600 text-blue-600 hover:bg-blue-50"
+            className="flex-1 gap-1 border-blue-600 text-blue-600 hover:bg-blue-50 cursor-pointer"
           >
             <Eye className="h-3 w-3" />
             {t("properties.actions.view")}
-          </Button>
-          <Button
-            variant="default"
-            size="sm"
-            onClick={() => onEdit(property)}
-            className="flex-1 gap-1 bg-blue-600 hover:bg-blue-700 text-white"
-          >
-            <Edit className="h-3 w-3" />
-            {t("properties.actions.edit")}
           </Button>
         </div>
       </CardFooter>

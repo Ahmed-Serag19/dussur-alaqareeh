@@ -50,6 +50,9 @@ const RegisterForm = ({ onSubmit, isLoading }: RegisterFormProps) => {
           />
         </FormField>
 
+        {/* Hidden role field defaulting to Admin to satisfy backend schema */}
+        <input type="hidden" value="Admin" {...register("role")} />
+
         <FormField
           label={t("auth.register.phone")}
           htmlFor="phone"

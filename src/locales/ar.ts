@@ -85,9 +85,11 @@ const ar = {
       description: "أدخل بياناتك لإنشاء حساب جديد",
       name: "الاسم",
       namePlaceholder: "أدخل الاسم الكامل",
+      email: "البريد الإلكتروني",
       emailPlaceholder: "أدخل البريد الإلكتروني",
       phone: "رقم الجوال",
       phonePlaceholder: "أدخل رقم الجوال",
+      password: "كلمة المرور",
       passwordPlaceholder: "أدخل كلمة المرور",
       confirmPasswordPlaceholder: "أعد إدخال كلمة المرور",
       registerButton: "إنشاء حساب",
@@ -197,6 +199,7 @@ const ar = {
     editProperty: "تعديل العقار",
     deleteProperty: "حذف العقار",
     viewProperty: "عرض العقار",
+    cancel: "إلغاء",
 
     // Status
     status: {
