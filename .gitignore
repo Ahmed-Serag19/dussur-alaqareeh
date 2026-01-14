@@ -24,4 +24,10 @@ dist-ssr
 *.sw?
 
 #Environment variables
-.envadmin-dussur-alaqareeh.rar 
+.env
+admin-dussur-alaqareeh.rar 
+.env.local
+.env.development
+.env.production
+.env.staging
+.env 
