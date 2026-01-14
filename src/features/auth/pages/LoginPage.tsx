@@ -14,6 +14,7 @@ import type { LoginDto } from "@/features/auth/types/auth.types";
 import useLanguage from "@/hooks/useLanguage";
 import { useAdmin } from "@/context/AdminContext";
 import { useNavigate } from "react-router-dom";
+import { getApiErrorMessage } from "@/lib/errorHandler";
 
 const LoginPage = () => {
   const { t } = useLanguage();
@@ -25,8 +26,9 @@ const LoginPage = () => {
       const token = response.data.token;
       login(token, navigate);
     },
-    onError: (error: any) => {
-      toast.error(error.response?.data?.message || t("auth.login.loginError"));
+    onError: (error: unknown) => {
+      const errorMessage = getApiErrorMessage(error);
+      toast.error(errorMessage);
     },
   });
 

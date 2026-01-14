@@ -232,7 +232,9 @@ const en = {
       conditionRequired: "Property condition is required",
       finishTypeRequired: "Finish type is required",
       streetRequired: "Street is required",
+      selectRequired: "Please select an option",
     },
+    selectOption: "Select an option",
 
     // Messages
     messages: {
@@ -246,6 +248,7 @@ const en = {
       locationRequiredToast: "Please select a location on the map",
       fixErrorsBeforeSubmit: "Please fix all errors before submitting",
       missingFields: "Missing required fields",
+      moreErrors: "and {{count}} more error(s)",
     },
 
     // Additional properties from second set

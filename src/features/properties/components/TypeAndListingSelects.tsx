@@ -50,12 +50,29 @@ const TypeAndListingSelects = ({
             render={({ field }) => (
               <Select
                 onValueChange={(v) => field.onChange(Number(v))}
-                value={field.value?.toString()}
+                value={field.value && field.value > 0 ? field.value.toString() : ""}
               >
-                <SelectTrigger className={isRTL ? "text-right" : "text-left"}>
-                  <SelectValue placeholder={t(`properties.${label}`)} />
+                <SelectTrigger
+                  className={`min-h-[40px] ${
+                    isRTL ? "text-right" : "text-left"
+                  }`}
+                >
+                  <SelectValue
+                    placeholder={t(
+                      `properties.select${
+                        label.charAt(0).toUpperCase() + label.slice(1)
+                      }`
+                    )}
+                  />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="0" disabled>
+                    {t(
+                      `properties.select${
+                        label.charAt(0).toUpperCase() + label.slice(1)
+                      }`
+                    )}
+                  </SelectItem>
                   {options?.map((item) => (
                     <SelectItem key={item.id} value={item.id.toString()}>
                       {isRTL ? item.nameAr : item.nameEn}

@@ -9,6 +9,7 @@ import type {
 } from "@/features/properties/types/property-response.types";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import { getApiErrorMessage } from "@/lib/errorHandler";
 
 export const usePropertiesData = () => {
   const { t } = useTranslation();
@@ -33,8 +34,9 @@ export const usePropertiesData = () => {
       queryClient.invalidateQueries({ queryKey: ["properties"] });
       toast.success(t("properties.delete.success"));
     },
-    onError: () => {
-      toast.error(t("properties.delete.error"));
+    onError: (error: unknown) => {
+      const errorMessage = getApiErrorMessage(error);
+      toast.error(errorMessage);
     },
   });
 

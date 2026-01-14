@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import { createProperty } from "@/features/properties/api/properties.api";
 import type { CreatePropertyFormData } from "@/features/properties/types/property.types";
 import useLanguage from "@/hooks/useLanguage";
+import { getApiErrorMessage } from "@/lib/errorHandler";
 
 export const usePropertySubmission = () => {
   const navigate = useNavigate();
@@ -31,21 +32,9 @@ export const usePropertySubmission = () => {
       toast.success(t("properties.createSuccess"));
       navigate("/properties");
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       console.error("Property creation error:", error);
-      console.error("Error response:", error.response?.data);
-      console.error("Error status:", error.response?.status);
-
-      let errorMessage = t("properties.createError");
-
-      if (error.response?.data?.message) {
-        errorMessage = error.response.data.message;
-      } else if (error.response?.data?.error) {
-        errorMessage = error.response.data.error;
-      } else if (error.response?.status === 403) {
-        errorMessage = "Access denied. Please check your authentication token.";
-      }
-
+      const errorMessage = getApiErrorMessage(error);
       toast.error(errorMessage);
     },
   });

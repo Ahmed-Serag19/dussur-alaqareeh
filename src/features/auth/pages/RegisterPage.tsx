@@ -13,6 +13,7 @@ import RegisterForm from "@/features/auth/components/RegisterForm";
 import { handleRegister as registerUser } from "@/features/auth/api/auth.api";
 import type { RegisterDto } from "@/features/auth/types/auth.types";
 import useLanguage from "@/hooks/useLanguage";
+import { getApiErrorMessage } from "@/lib/errorHandler";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -24,10 +25,9 @@ const RegisterPage = () => {
       toast.success(t("auth.register.registerSuccess"));
       navigate("/auth/login");
     },
-    onError: (error: any) => {
-      toast.error(
-        error.response?.data?.message || t("auth.register.registerError")
-      );
+    onError: (error: unknown) => {
+      const errorMessage = getApiErrorMessage(error);
+      toast.error(errorMessage);
     },
   });
 

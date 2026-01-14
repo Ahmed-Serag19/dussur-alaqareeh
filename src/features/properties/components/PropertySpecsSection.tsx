@@ -55,16 +55,21 @@ export const PropertySpecsSection = ({
                 render={({ field }) => (
                   <Select
                     onValueChange={(value) => field.onChange(Number(value))}
-                    value={field.value?.toString()}
+                    value={field.value && field.value > 0 ? field.value.toString() : ""}
                   >
                     <SelectTrigger
-                      className={isRTL ? "text-right" : "text-left"}
+                      className={`min-h-[40px] ${
+                        isRTL ? "text-right" : "text-left"
+                      }`}
                     >
                       <SelectValue
                         placeholder={t("properties.selectCondition")}
                       />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="0" disabled>
+                        {t("properties.selectCondition")}
+                      </SelectItem>
                       {conditions?.map((condition) => (
                         <SelectItem
                           key={condition.id}
@@ -98,16 +103,21 @@ export const PropertySpecsSection = ({
                 render={({ field }) => (
                   <Select
                     onValueChange={(value) => field.onChange(Number(value))}
-                    value={field.value?.toString()}
+                    value={field.value && field.value > 0 ? field.value.toString() : ""}
                   >
                     <SelectTrigger
-                      className={isRTL ? "text-right" : "text-left"}
+                      className={`min-h-[40px] ${
+                        isRTL ? "text-right" : "text-left"
+                      }`}
                     >
                       <SelectValue
                         placeholder={t("properties.selectFinishType")}
                       />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="0" disabled>
+                        {t("properties.selectFinishType")}
+                      </SelectItem>
                       {finishTypes?.map((type) => (
                         <SelectItem key={type.id} value={type.id.toString()}>
                           {isRTL ? type.nameAr : type.nameEn}
@@ -135,12 +145,23 @@ export const PropertySpecsSection = ({
               >
                 {t("properties.roomsCount")}
               </Label>
-              <Input
-                id="roomsCount"
-                type="number"
-                min="0"
-                className={isRTL ? "text-right" : "text-left"}
-                {...register("roomsCount", { valueAsNumber: true })}
+              <Controller
+                name="roomsCount"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    id="roomsCount"
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    className={`w-24 ${isRTL ? "text-right" : "text-left"}`}
+                    value={field.value || ""}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/[^0-9]/g, "");
+                      field.onChange(value ? Number(value) : 0);
+                    }}
+                  />
+                )}
               />
             </div>
 
@@ -153,12 +174,23 @@ export const PropertySpecsSection = ({
               >
                 {t("properties.bathroomsCount")}
               </Label>
-              <Input
-                id="bathroomsCount"
-                type="number"
-                min="0"
-                className={isRTL ? "text-right" : "text-left"}
-                {...register("bathroomsCount", { valueAsNumber: true })}
+              <Controller
+                name="bathroomsCount"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    id="bathroomsCount"
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    className={`w-24 ${isRTL ? "text-right" : "text-left"}`}
+                    value={field.value || ""}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/[^0-9]/g, "");
+                      field.onChange(value ? Number(value) : 0);
+                    }}
+                  />
+                )}
               />
             </div>
 
@@ -171,12 +203,23 @@ export const PropertySpecsSection = ({
               >
                 {t("properties.livingroomsCount")}
               </Label>
-              <Input
-                id="livingroomsCount"
-                type="number"
-                min="0"
-                className={isRTL ? "text-right" : "text-left"}
-                {...register("livingroomsCount", { valueAsNumber: true })}
+              <Controller
+                name="livingroomsCount"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    id="livingroomsCount"
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    className={`w-24 ${isRTL ? "text-right" : "text-left"}`}
+                    value={field.value || ""}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/[^0-9]/g, "");
+                      field.onChange(value ? Number(value) : 0);
+                    }}
+                  />
+                )}
               />
             </div>
 
@@ -189,12 +232,23 @@ export const PropertySpecsSection = ({
               >
                 {t("properties.floorsCount")}
               </Label>
-              <Input
-                id="floorsCount"
-                type="number"
-                min="0"
-                className={isRTL ? "text-right" : "text-left"}
-                {...register("floorsCount", { valueAsNumber: true })}
+              <Controller
+                name="floorsCount"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    id="floorsCount"
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    className={`w-24 ${isRTL ? "text-right" : "text-left"}`}
+                    value={field.value || ""}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/[^0-9]/g, "");
+                      field.onChange(value ? Number(value) : 0);
+                    }}
+                  />
+                )}
               />
             </div>
           </div>
@@ -208,12 +262,23 @@ export const PropertySpecsSection = ({
             >
               {t("properties.buildingAge")}
             </Label>
-            <Input
-              id="buildingAge"
-              type="number"
-              min="0"
-              className={isRTL ? "text-right" : "text-left"}
-              {...register("buildingAge", { valueAsNumber: true })}
+            <Controller
+              name="buildingAge"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  id="buildingAge"
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  className={`w-32 ${isRTL ? "text-right" : "text-left"}`}
+                  value={field.value || ""}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9]/g, "");
+                    field.onChange(value ? Number(value) : 0);
+                  }}
+                />
+              )}
             />
           </div>
         </CardContent>

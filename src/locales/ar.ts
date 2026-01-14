@@ -228,7 +228,9 @@ const ar = {
       conditionRequired: "حالة العقار مطلوبة",
       finishTypeRequired: "نوع التشطيب مطلوب",
       streetRequired: "الشارع مطلوب",
+      selectRequired: "يرجى اختيار خيار",
     },
+    selectOption: "اختر خياراً",
 
     // Messages
     messages: {
@@ -242,6 +244,7 @@ const ar = {
       locationRequiredToast: "يرجى تحديد الموقع على الخريطة",
       fixErrorsBeforeSubmit: "يرجى تصحيح جميع الأخطاء قبل الإرسال",
       missingFields: "بعض الحقول المطلوبة مفقودة",
+      moreErrors: "و{{count}} خطأ/أخطاء أخرى",
     },
 
     // Additional properties from second set

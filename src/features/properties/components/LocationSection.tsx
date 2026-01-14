@@ -73,14 +73,19 @@ export const LocationSection = ({
                 render={({ field }) => (
                   <Select
                     onValueChange={(value) => field.onChange(Number(value))}
-                    value={field.value?.toString()}
+                    value={field.value && field.value > 0 ? field.value.toString() : ""}
                   >
                     <SelectTrigger
-                      className={isRTL ? "text-right" : "text-left"}
+                      className={`min-h-[40px] ${
+                        isRTL ? "text-right" : "text-left"
+                      }`}
                     >
                       <SelectValue placeholder={t("properties.selectRegion")} />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="0" disabled>
+                        {t("properties.selectRegion")}
+                      </SelectItem>
                       {regions.map((region) => (
                         <SelectItem
                           key={region.id}
@@ -114,15 +119,20 @@ export const LocationSection = ({
                 render={({ field }) => (
                   <Select
                     onValueChange={(value) => field.onChange(Number(value))}
-                    value={field.value?.toString()}
+                    value={field.value?.toString() || ""}
                     disabled={!selectedRegion}
                   >
                     <SelectTrigger
-                      className={isRTL ? "text-right" : "text-left"}
+                      className={`min-h-[40px] ${
+                        isRTL ? "text-right" : "text-left"
+                      }`}
                     >
                       <SelectValue placeholder={t("properties.selectCity")} />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="0" disabled>
+                        {t("properties.selectCity")}
+                      </SelectItem>
                       {cities.map((city) => (
                         <SelectItem key={city.id} value={city.id.toString()}>
                           {isRTL ? city.nameAr : city.nameEn}
@@ -153,17 +163,22 @@ export const LocationSection = ({
                 render={({ field }) => (
                   <Select
                     onValueChange={(value) => field.onChange(Number(value))}
-                    value={field.value?.toString()}
+                    value={field.value?.toString() || ""}
                     disabled={!selectedCity}
                   >
                     <SelectTrigger
-                      className={isRTL ? "text-right" : "text-left"}
+                      className={`min-h-[40px] ${
+                        isRTL ? "text-right" : "text-left"
+                      }`}
                     >
                       <SelectValue
                         placeholder={t("properties.selectNeighborhood")}
                       />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="0" disabled>
+                        {t("properties.selectNeighborhood")}
+                      </SelectItem>
                       {neighborhoods.map((neighborhood) => (
                         <SelectItem
                           key={neighborhood.id}
